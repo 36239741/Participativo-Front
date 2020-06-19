@@ -5,10 +5,15 @@
   "projects": {
     "Participativo-Front": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": false,
+          "inlineStyle": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "participativo",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -24,7 +29,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/custom-theme.scss",
+              "src/styles.css",
+              "src/resetCss.css"
             ],
             "scripts": []
           },
@@ -73,6 +80,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "Participativo-Front"
 }
