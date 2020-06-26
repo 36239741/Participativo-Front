@@ -1,0 +1,26 @@
+<div class="content" 
+fxLayout="row"
+fxLayoutAlign="center center">
+
+  <section
+  fxHide.xs
+  fxHide.sm
+  class="standard-size info">
+    <div 
+    class="info-content"
+    fxLayout="column"
+    fxLayoutAlign="center center">
+      <img src="../../../../assets/imgs/logomarca-participativo-white.png">
+    </div>
+  </section>
+  
+  <section class="standard-size user-action" [@routeAnimations]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </section>  
+</div>
+
+
+
+
+
+

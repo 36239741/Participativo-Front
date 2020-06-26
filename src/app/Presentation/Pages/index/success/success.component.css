@@ -1,0 +1,26 @@
+.content header h4 {
+    color: #01579b
+}
+@media(max-width: 1279px) {
+    .content {
+        padding: 20px;
+    }
+    .content mat-icon {
+        display: none;
+    }
+    .content div header {
+        margin-bottom: 20px;
+    }
+    .content div header h4 {
+        font-size: 1.5rem;
+    }
+}
+.content mat-icon {
+    color: green;
+    font-size: 90px;
+    width: 100px;
+    height: 100px;
+}
+.content span {
+    color: #01579b;
+}

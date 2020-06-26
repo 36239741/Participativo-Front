@@ -1,0 +1,36 @@
+<div 
+  class="content"
+  fxLayout="column"
+  >
+      <h5>Faça seu login!</h5>
+      <mat-form-field>
+        <mat-label>Digite seu email</mat-label>
+        <input matInput placeholder="Digite seu email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Digite sua senha</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <section 
+      fxFlex="1"
+      fxFlexAlign="end">
+        <a routerLink="recuperar-senha">Esqueceu sua senha?</a>
+      </section>
+
+      <button mat-raised-button color="primary" id="login">Entrar</button>
+
+
+    <div 
+    class="divider"
+    fxLayoutAlign="center center"
+    fxLayout="row"> 
+        <p>ou</p>
+    </div>
+
+      <button mat-raised-button id="registrar" routerLink='registrar'>Registrar-se</button>
+</div>

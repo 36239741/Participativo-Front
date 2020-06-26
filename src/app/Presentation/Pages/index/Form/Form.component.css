@@ -1,0 +1,19 @@
+.content {
+    color: #01579b;
+}
+.content a {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+}
+.buttons {
+    margin-top: 40px;
+}
+.buttons a{
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+}
+a:visited {
+    color: #01579b;
+}

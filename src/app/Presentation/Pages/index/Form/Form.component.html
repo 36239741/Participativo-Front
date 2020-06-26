@@ -1,0 +1,48 @@
+<div 
+fxLayout="column"
+class="content">
+    <h5>Crie sua nova conta</h5>
+
+    <mat-form-field >
+        <mat-label>CPF</mat-label>
+        <input matInput placeholder="Digite seu cpf">
+    </mat-form-field>
+    <mat-form-field >
+        <mat-label>Data de nascimento</mat-label>
+        <input matInput placeholder="Digite sua data de nascimento">
+    </mat-form-field>
+    <mat-form-field >
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="Digite seu email">
+    </mat-form-field>
+    <mat-form-field >
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="Digite seu nome">
+    </mat-form-field>
+    <mat-form-field >
+        <mat-label>Sobrenome</mat-label>
+        <input matInput placeholder="Digite seu sobrenome">
+    </mat-form-field>
+    <mat-form-field >
+        <mat-label>Telefone</mat-label>
+        <input matInput placeholder="Digite seu telefone">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Nova senha</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <span>Ao clicar em cadastrar, você concorda com os</span><a>Termos e Política de dados.</a>
+
+      <section
+      class="buttons"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      fxLayoutGap="20px"
+      >
+        <button mat-raised-button color="primary" id="login" routerLink="/sucesso/registro">Cadastrar</button>
+        <a routerLink="/" >Já tenho uma conta!</a>
+      </section>
+</div>

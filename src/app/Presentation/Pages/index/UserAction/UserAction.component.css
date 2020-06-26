@@ -1,0 +1,30 @@
+.content a{
+    text-align: right;
+    color: rgba(2, 136, 209, 0.5);
+    text-decoration: none;
+    transition: 200ms;
+}
+.content a:hover{
+    cursor: pointer;
+    color: rgba(2, 136, 209, 1);
+}
+.content h5 {
+    margin-bottom: 10px;
+    color: #01579b;
+    font-weight: bold;
+}
+.content #login {
+    margin-top: 40px;
+}
+.content div {
+    height: 30px;
+    width: 100%;
+}
+.content div hr {
+    width: 30%;
+    height: 0px;
+}
+.divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
