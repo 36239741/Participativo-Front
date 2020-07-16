@@ -1,14 +1,13 @@
 import { Routes, RouterModule } from '@angular/router';
-
-import { HomeComponent } from './home.component';
 import { LayoutComponent } from '../../Base/layout/layout.component';
+import { PerfiComponent } from './perfi.component';
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, 
-  data: {animation: 'Home'},
+  data: {animation: 'Perfil'},
   children: [
-      {path: '', component: HomeComponent}
-  ]},
+    { path: '', component: PerfiComponent }
+  ] },
 ];
 
-export const HomeRoutes = RouterModule.forChild(routes);
+export const PerfilRoutes = RouterModule.forChild(routes);

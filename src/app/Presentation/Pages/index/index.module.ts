@@ -9,6 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../Shared/material/material.module';
 import { FormComponent } from './Form/Form.component';
 import { SuccessComponent } from './success/success.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { SuccessComponent } from './success/success.component';
     IndexRoutes,
     FlexLayoutModule,
     MaterialModule,
+    ReactiveFormsModule
     
   ],
 })

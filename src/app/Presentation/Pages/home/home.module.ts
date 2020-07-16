@@ -2,16 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeComponent } from './home.component';
-import { LayoutModule } from '../../Base/layout/layout.module';
 import { HomeRoutes } from './home.routing';
+import { LayoutModule } from '../../Base/layout/layout.module';
+import { MaterialModule } from '../../Shared/material/material.module';
+import { HomePublicacaoComponent } from './home-publicacao/home-publicacao.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [
+    HomeComponent,
+    HomePublicacaoComponent
+  ],
   imports: [
     CommonModule,
+    HomeRoutes,
     LayoutModule,
-    HomeRoutes
+    MaterialModule,
+    FlexLayoutModule
   ],
 })
 export class HomeModule { }

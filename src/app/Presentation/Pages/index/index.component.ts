@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { routeAnimations } from './route.animations'
+import { routeAnimations } from '../../Shared/routerAnimations/route.animations';
+
+
 
 
 @Component({

@@ -7,6 +7,7 @@ import {
     transition,
     group,
     animateChild,
+    stagger,
   } from '@angular/animations';
 
 

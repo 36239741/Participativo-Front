@@ -1,0 +1,51 @@
+#logo {
+    width: 60px;
+    height: 60px;
+}
+mat-toolbar {
+    background-color: white;
+}
+mat-sidenav {
+    width: 200px;
+    height: 100%;
+    border: none;
+    background-color: #F2F3F5;
+}
+mat-sidenav-container {
+    height: calc(100vh - 64px);
+    background-color: #F2F3F5;
+}
+mat-list {
+    padding-top: 0px;
+}
+.menu-list {
+    text-decoration: none;
+    font-size: 0.875rem;
+    letter-spacing: 1.25px;
+    transition: 300ms;
+    border-radius: 5px;
+    color: #01579b; 
+}
+.menu-list:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.menu-list span {
+    margin-left: 10px;
+}
+.icons {
+    width: 100vw;
+    height: 100%;
+}
+.home-content {
+    width: 810px;
+    height: calc(100vh - 64px);
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-right: 145px;
+}
+nav a {
+    transition: 300ms;
+}
+nav a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}

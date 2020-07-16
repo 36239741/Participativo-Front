@@ -1,6 +1,51 @@
 <mat-toolbar>
   <mat-toolbar-row>
-    <span>Custom Toolbar</span>
+    <img id="logo" src="../../../../assets/imgs/logomarca-participativo-blue.png" alt="Logo Marca.">
+    <div 
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    class="icons">
+
+      <nav mat-tab-nav-bar>
+        <a 
+        *ngFor="let menu of menu"
+        routerLink="{{ menu.link }}"
+        (click)="activeLink = menu.link"
+        [active]="activeLink == menu.link"
+        mat-tab-link >
+          <mat-icon>
+            {{ menu.icon }}
+          </mat-icon>
+        </a>
+      </nav>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
+
+  <mat-sidenav-container>
+    <mat-sidenav opened mode="side">
+      <mat-list>
+        <a 
+        *ngFor="let menus of menu"
+        class="menu-list"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        routerLinkActive="active"
+        routerLink="{{ menus.link }}" 
+        (click)="activeLink = menus.link"
+        mat-list-item>
+          <mat-icon>{{ menus.icon }}</mat-icon>
+          <span> {{ menus.title }} </span>
+        </a>
+      </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content
+    fxLayout="row"
+    fxLayoutAlign="center start"
+    >
+    <div class="home-content">
+      <router-outlet></router-outlet>
+    </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

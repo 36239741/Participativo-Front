@@ -7,8 +7,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-
-
+import { MatSidenavModule } from '@angular/material/sidenav'; 
+import { MatListModule } from '@angular/material/list'; 
+import { MatTabsModule } from '@angular/material/tabs'; 
+import { MatCardModule } from '@angular/material/card'; 
+import { MatSnackBarModule } from '@angular/material/snack-bar'; 
 
 
 @NgModule({
@@ -19,7 +22,12 @@ import { MatDividerModule } from '@angular/material/divider';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTabsModule,
+    MatCardModule,
+    MatSnackBarModule
   ],
   exports: [
     MatToolbarModule,
@@ -27,7 +35,12 @@ import { MatDividerModule } from '@angular/material/divider';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTabsModule,
+    MatCardModule,
+    MatSnackBarModule
   ],
   declarations: []
 })

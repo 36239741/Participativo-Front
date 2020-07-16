@@ -1,0 +1,100 @@
+<div 
+fxLayout="column"
+class="publicacao-content">
+<mat-card>
+
+  <div 
+  fxLayoutAlign="space-between"
+  fxLayout="row"> 
+  <section>
+    <header
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="10px">
+      <img src="../../../../../assets/imgs/foto.jpg" alt="Foto do usuário.">
+      <section
+      fxLayout="column"
+      fxLayoutAlign="center start"
+      fxLayoutGap="10px"
+      >
+        <span class="user-publicacao">
+          Henrique Nitatori
+        </span>
+        <span class="data-publicacao">
+          Publicado em 05 de maio de 2019 ás 21h58
+        </span>
+      </section>
+    </header>
+  </section>
+    <section>
+      <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </section>
+  </div>
+</mat-card>
+<div class="img-publicacao">
+    <img src="../../../../../assets/imgs/images.jpeg">
+  <div 
+  [class.mat-elevation-z3]="true"
+  class="local-publicacao"
+  fxLayout="row"
+  fxLayoutAlign="center center">
+  <span>
+    Igapava, 875 Curitibano iV, Foz do Iguaçu-pr
+  </span>
+  </div>
+</div>
+
+<mat-card>
+  <span>
+    Buraco que causa muito encomodo a quem passa pela rua todos os dias
+  </span>
+  <div 
+  class="info-publicacao"
+  fxLayoutAlign="space-between">
+    <span>
+      214 pessoas apoiam essa publicação
+    </span>
+    <span>
+      153 Comentários
+    </span>
+  </div>
+  <mat-divider></mat-divider>
+<div
+  fxLayout="row"
+  fxLayoutAlign="start center">
+  <div 
+  class="actions-publicacao"
+  
+  fxLayoutAlign="space-around">
+    <button mat-icon-button  aria-label="Example icon button with a home icon">
+      <mat-icon>thumb_up</mat-icon>
+      Apoiar
+    </button>
+    <button mat-icon-button aria-label="Example icon button with a home icon">
+      <mat-icon>chat_bubble_outline</mat-icon>
+      Comentar
+    </button>
+  </div>
+  <div
+  class="status-content-publicacao"
+  fxLayout="column"
+  fxLayoutGap="10px"
+  fxLayoutAlign="center center">
+    <section class="status-publicacao">
+      <span>
+        Status
+      </span>
+      <span>
+        Concluido
+      </span>
+    </section>
+    <span>
+      em 06/07/2019 
+    </span>
+  </div>
+</div>
+</mat-card>
+
+</div>
