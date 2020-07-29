@@ -1,48 +1,83 @@
 <div 
 fxLayout="column"
 class="content">
+
     <h5>Crie sua nova conta</h5>
+    <form 
+    fxLayout="column"
+    [formGroup]="form">
 
     <mat-form-field >
         <mat-label>CPF</mat-label>
-        <input matInput placeholder="Digite seu cpf">
+        <input matInput placeholder="Digite seu cpf" formControlName="cpf" mask="000.000.000-009" required>
+        <mat-error *ngIf="form.get('cpf').hasError('required')">
+          Cpf é <strong>obrigatório</strong>
+        </mat-error>
     </mat-form-field>
-    <mat-form-field >
+    <mat-form-field>
         <mat-label>Data de nascimento</mat-label>
-        <input matInput placeholder="Digite sua data de nascimento">
-    </mat-form-field>
+        <input matInput [matDatepicker]="picker1" formControlName="dataNascimento" required>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <mat-error *ngIf="form.get('dataNascimento').hasError('required')">
+          Data de nascimento é <strong>obrigatória</strong>
+        </mat-error>
+      </mat-form-field>
     <mat-form-field >
         <mat-label>E-mail</mat-label>
-        <input matInput placeholder="Digite seu email">
+        <input matInput placeholder="participativo@example.com" formControlName="email" required>
+        <mat-error *ngIf="form.get('email').hasError('required')">
+          E-mail é <strong>obrigatório</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
+          Por favor insira um endereço de e-mail válido
+        </mat-error>
     </mat-form-field>
     <mat-form-field >
         <mat-label>Nome</mat-label>
-        <input matInput placeholder="Digite seu nome">
+        <input matInput placeholder="Digite seu nome" formControlName="nome" required>
+        <mat-error *ngIf="form.get('nome').hasError('required')">
+          Nome é <strong>obrigatório</strong>
+        </mat-error>
     </mat-form-field>
     <mat-form-field >
         <mat-label>Sobrenome</mat-label>
-        <input matInput placeholder="Digite seu sobrenome">
+        <input matInput placeholder="Digite seu sobrenome" formControlName="sobrenome" required>
+        <mat-error *ngIf="form.get('sobrenome').hasError('required')">
+          Sobrenome é <strong>obrigatório</strong>
+        </mat-error>
     </mat-form-field>
     <mat-form-field >
         <mat-label>Telefone</mat-label>
-        <input matInput placeholder="Digite seu telefone">
+        <input matInput placeholder="Digite seu telefone" formControlName="telefone" mask="(00) 00009-0000" required>
+        <mat-error *ngIf="form.get('telefone').hasError('required')">
+          Telefone é <strong>obrigatório</strong>
+        </mat-error>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Nova senha</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'">
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha" required>
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
+        <mat-error *ngIf="form.get('senha').hasError('required')">
+          Senha é <strong>obrigatória</strong>
+        </mat-error>
       </mat-form-field>
-      <span>Ao clicar em cadastrar, você concorda com os</span><a>Termos e Política de dados.</a>
-
-      <section
+      <span>Ao clicar em cadastrar, você concorda com os</span><a routerLink="termos-uso" >Termos e Política de dados.</a>
+    </form>
+    <section
       class="buttons"
       fxLayout="row"
       fxLayoutAlign="center center"
       fxLayoutGap="20px"
       >
-        <button mat-raised-button color="primary" id="login" routerLink="/sucesso/registro">Cadastrar</button>
+        <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="register()"
+        >Cadastrar</button>
         <a routerLink="/" >Já tenho uma conta!</a>
       </section>
+
 </div>

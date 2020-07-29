@@ -3,6 +3,7 @@ import { FormControl, Validators, FormGroupDirective, NgForm } from '@angular/fo
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthenticationService } from 'src/app/Infra/Authentication/authentication.service';
 import { SnackbarService } from 'src/app/Presentation/Shared/snackbar/snackbar.service';
+import { Router } from '@angular/router';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -22,10 +23,10 @@ export interface Login {
 })
 export class UserActionComponent implements OnInit {
   hide = true;
-  constructor(
+  constructor
+  ( private router: Router,
     private authentication: AuthenticationService,
-    private snackBar: SnackbarService
-    ) {
+    private snackBar: SnackbarService) {
    }
 
   ngOnInit() {
@@ -35,18 +36,39 @@ export class UserActionComponent implements OnInit {
   password = new FormControl('', [Validators.required]);
 
 
-
+/*
+  Executa as demais funcoes 
+*/
   login() {
     if(this.validate()) {
       this.submit(this.formValues());
     }
   }
-
+  /*
+  Deve fazer o login, se der certo redireciona para /home se nao mostra uma mensagem
+  de error atraves de uma snackbar.
+  */
   submit(login?: Login) {
-    this.authentication.login(login).subscribe(() => {}, error => 
-    {this.snackBar.open(error.error.message, 5 , 'error');});
+    this.authentication.login(login).subscribe(() => {
+      this.router.navigate(['/home'])
+    }, error => 
+    {this.snackBar.open(
+      { message: error.error.message,
+        duration: 5,
+        customClass: 'error' }
+      )
+      this.email.reset('');
+      this.password.reset('');
+    }
+      );
   }
-
+/*
+Recupera os valores do fomulario de login e isere ne um objeto de formato:
+Login: {
+    email: string,
+    senha:string
+}
+*/
   formValues() {
     let Login = {
       email: this.email.value,
@@ -54,6 +76,9 @@ export class UserActionComponent implements OnInit {
     }
     return Login;
   }
+/*
+Verifica se os campos email e password do formulario estao validos
+*/
   validate() {
     return this.email.valid && this.password.valid ? true : false;
   }

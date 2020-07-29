@@ -10,6 +10,9 @@ import { MaterialModule } from '../../Shared/material/material.module';
 import { FormComponent } from './Form/Form.component';
 import { SuccessComponent } from './success/success.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxModule } from '../../Shared/ngxMask/ngx-mask/ngx-mask.module';
+import { RulesComponent } from './Form/rules/rules.component';
+
 
 @NgModule({
   declarations: [
@@ -17,15 +20,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserActionComponent,
     IndexComponent,
     FormComponent,
-    SuccessComponent
+    SuccessComponent,
+    RulesComponent
   ],
   imports: [
     CommonModule,
     IndexRoutes,
     FlexLayoutModule,
     MaterialModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+    NgxModule
   ],
 })
 export class IndexModule { }

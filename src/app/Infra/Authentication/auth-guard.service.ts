@@ -12,7 +12,6 @@ constructor( private auth: AuthenticationService,
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | import("@angular/router").UrlTree | import("rxjs").Observable<boolean | import("@angular/router").UrlTree> | Promise<boolean | import("@angular/router").UrlTree> {
     let looged = this.auth.isLogged();
     let url = this.route.url;
-    console.log(this.route.url)
     if(looged === true) {
       this.route.navigate(['home']);
       return looged

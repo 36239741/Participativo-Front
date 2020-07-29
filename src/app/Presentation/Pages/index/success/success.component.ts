@@ -9,7 +9,7 @@ import { Success } from './success.interface';
 })
 export class SuccessComponent implements OnInit {
   method?: string = '';
-  success: Success;
+  success: Success = { title: '', phrase: '' };
   constructor(private actRoute: ActivatedRoute,
               private route: Router) { }
 
@@ -19,7 +19,6 @@ export class SuccessComponent implements OnInit {
 
   async checkMethod() {
     this.method = await this.actRoute.snapshot.params.method;
-    console.log(this.method)
     if(this.method == 'registro') {
       this.success = {title: 'Registro efetuado!', phrase: 'Verifique seu email para confirmar seu cadastro.'};
     }
@@ -27,7 +26,7 @@ export class SuccessComponent implements OnInit {
       this.success = {title: 'E-mail enviado!', phrase: 'Verifique seu email e clique no botão "Alterar a senha".'}
     }
     else {
-      this.route.navigate(['/'])
+      this.route.navigate(['/'])  
     }
   }
 

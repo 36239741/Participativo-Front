@@ -14,7 +14,9 @@ fxLayoutAlign="center center">
     </div>
   </section>
   
-  <section class="standard-size user-action" [@routeAnimations]="prepareRoute(outlet)">
+  <section 
+  class="standard-size user-action" 
+  [@routeAnimations]="prepareRoute(outlet)">
     <router-outlet #outlet="outlet"></router-outlet>
   </section>  
 </div>
