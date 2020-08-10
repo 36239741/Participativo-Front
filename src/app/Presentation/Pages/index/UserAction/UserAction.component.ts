@@ -50,9 +50,10 @@ export class UserActionComponent implements OnInit {
   */
   submit(login?: Login) {
     this.authentication.login(login).subscribe(() => {
-      this.router.navigate(['/home'])
+      this.router.navigate(['home'])
     }, error => 
-    {this.snackBar.open(
+    {
+      this.snackBar.open(
       { message: error.error.message,
         duration: 5,
         customClass: 'error' }

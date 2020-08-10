@@ -43,9 +43,37 @@ mat-list {
     padding-right: 16px;
     margin-right: 145px;
 }
+.home-content-xs-sm {
+    width: 100%;
+    height: calc(100vh - 64px);
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+}
 nav a {
     transition: 300ms;
 }
 nav a:hover {
     background-color: rgba(0, 0, 0, 0.1);
+}
+.logo {
+    width: 41%;
+}
+mat-form-field{
+    width: 50%;
+    font-size: 0.9375rem;
+    color: #01579b;
+    width: 200px;
+}
+#menu {
+    position: relative;
+    width: calc(100vw - 16px);
+}
+#logo-search {
+    position: absolute;
+    width: calc(100vw- 16px);
+}
+.search {
+    position: absolute;
+    margin-left: 80px;
 }

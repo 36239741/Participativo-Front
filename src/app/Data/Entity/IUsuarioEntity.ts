@@ -1,4 +1,5 @@
 export interface Usuario {
+    uuid?: string;
     cpf: string;
     dataNascimento: string;
     email: string;
@@ -7,4 +8,5 @@ export interface Usuario {
     telefone: string;
     senha:  string;
     tipo?: number;
+    avatar?: string;
 }

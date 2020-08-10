@@ -1,3 +1,51 @@
-<p>
-  perfi works!
-</p>
+
+  <div 
+  class="header"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="5px"
+  >
+    <img src="../../../../assets/imgs/none-avatar.jpg" alt="Logo do usuario.">
+    <h5>{{ user.nome }} {{ user.sobrenome }}</h5>
+  </div>
+  <mat-card>
+  <div
+  fxLayoutAlign="space-between">
+    <h5>Sobre</h5>
+    <button mat-raised-button (click)="openEdit()">Editar</button>
+  </div>
+  <div
+  fxLayoutGap="20px"
+  fxLayout="column"
+  >
+    <section
+    fxLayout="row"
+    fxLayoutGap="10px"
+    fxLayoutAlign="start center">
+      <mat-icon>email</mat-icon>
+      <p>{{ user.email }}</p>
+    </section>
+    <section
+    fxLayout="row"
+    fxLayoutGap="10px"
+    fxLayoutAlign="start center">
+      <mat-icon>account_box</mat-icon>
+      <p>{{ user.cpf | mask: "000.000.000-009" }}</p>
+    </section>
+    <section
+    fxLayout="row"
+    fxLayoutGap="10px"
+    fxLayoutAlign="start center">
+      <mat-icon>date_range</mat-icon>
+      <p>{{ user.dataNascimento }}</p>
+    </section>
+    <section
+    fxLayout="row"
+    fxLayoutGap="10px"
+    fxLayoutAlign="start center">
+      <mat-icon>phone</mat-icon>
+      <p>{{ user.telefone | mask:"(00) 00009-0000" }}</p>
+    </section>
+
+  </div>
+</mat-card>

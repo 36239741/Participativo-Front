@@ -1,8 +1,8 @@
 <div 
 fxLayout="column"
+*ngFor="let publicacao of publicacaoContent, let i = index"
 class="publicacao-content">
 <mat-card>
-
   <div 
   fxLayoutAlign="space-between"
   fxLayout="row"> 
@@ -11,17 +11,18 @@ class="publicacao-content">
     fxLayout="row"
     fxLayoutAlign="start center"
     fxLayoutGap="10px">
-      <img src="../../../../../assets/imgs/foto.jpg" alt="Foto do usuário.">
+      <img *ngIf="publicacao.usuario.avatar != null" src="" alt="Foto do usuário.">
+      <img *ngIf="publicacao.usuario.avatar == null" src="../../../../../assets/imgs/no_user_logo.png" alt="Foto do usuário.">
       <section
       fxLayout="column"
       fxLayoutAlign="center start"
       fxLayoutGap="10px"
       >
         <span class="user-publicacao">
-          Henrique Nitatori
+          {{ publicacao.usuario.nome  }} {{ publicacao.usuario.sobrenome }}
         </span>
         <span class="data-publicacao">
-          Publicado em 05 de maio de 2019 ás 21h58
+          Publicado em {{ publicacao.createdAt }}
         </span>
       </section>
     </header>
@@ -33,6 +34,18 @@ class="publicacao-content">
     </section>
   </div>
 </mat-card>
+<div 
+[class.mat-elevation-z3]="true"
+class="tipo-publicacao"
+[ngClass]="{'elogio': publicacao.categoria.nome === 'Elogio',
+ 'reclamacao': publicacao.categoria.nome === 'Reclamação',
+'sugestao': publicacao.categoria.nome === 'Sugestão'}"
+fxLayout="row"
+fxLayoutAlign="center center">
+<span>
+  <strong> {{ publicacao.categoria.nome }} </strong>
+</span>
+</div>
 <div class="img-publicacao">
     <img src="../../../../../assets/imgs/images.jpeg">
   <div 
@@ -41,60 +54,80 @@ class="publicacao-content">
   fxLayout="row"
   fxLayoutAlign="center center">
   <span>
-    Igapava, 875 Curitibano iV, Foz do Iguaçu-pr
+    {{ publicacao.endereco.logradouro }} {{ publicacao.endereco.numero }}, {{ publicacao.endereco.bairro.nome }}, {{ publicacao.endereco.bairro.cidade.nome }} - {{ publicacao.endereco.bairro.cidade.estado.nome }}
   </span>
   </div>
 </div>
 
 <mat-card>
   <span>
-    Buraco que causa muito encomodo a quem passa pela rua todos os dias
+    {{ publicacao.descricao }}
   </span>
   <div 
   class="info-publicacao"
   fxLayoutAlign="space-between">
     <span>
-      214 pessoas apoiam essa publicação
+      <strong>{{ publicacao.totalApoios }}</strong> pessoas apoiam essa publicação
     </span>
     <span>
-      153 Comentários
+      <a (click)="openSelect(i)"><strong>{{ publicacao.totalComentarios }} </strong> Comentários</a>
     </span>
   </div>
   <mat-divider></mat-divider>
-<div
-  fxLayout="row"
-  fxLayoutAlign="start center">
   <div 
-  class="actions-publicacao"
-  
-  fxLayoutAlign="space-around">
-    <button mat-icon-button  aria-label="Example icon button with a home icon">
-      <mat-icon>thumb_up</mat-icon>
-      Apoiar
+  fxLayoutAlign="space-between">
+  <section fxLayout>
+    <button mat-button (click)="apoiarOrDesapoiar(publicacao)"> 
+      <mat-icon [ngClass]="{'apoiado': apoio[publicacao.uuid]}">thumb_up</mat-icon>
+      {{ apoio[publicacao.uuid] ? 'Apoiado' : 'Apoiar' }}
     </button>
-    <button mat-icon-button aria-label="Example icon button with a home icon">
+    <button (click)="openSelect(i)" mat-button aria-label="Example icon button with a home icon">
       <mat-icon>chat_bubble_outline</mat-icon>
       Comentar
     </button>
-  </div>
+  </section>
   <div
-  class="status-content-publicacao"
+  *ngFor="let status of publicacao.statuses | lastPosition"
   fxLayout="column"
   fxLayoutGap="10px"
+  fxLayoutAlign="center center"
+  >
+  <a
+  (click)= "openDialog(publicacao.statuses)"
+  class="history-status"
+  fxLayout="column"
   fxLayoutAlign="center center">
-    <section class="status-publicacao">
+    <section
+    fxLayout="row"
+    class="status-publicacao">
       <span>
         Status
       </span>
-      <span>
-        Concluido
+      <span >
+        {{ status.tipo }}
       </span>
     </section>
     <span>
-      em 06/07/2019 
+      em {{ status.createdAt }}
     </span>
+  </a>
   </div>
-</div>
+  </div>
+<participativo-comment 
+  *ngIf="show[i]"
+  (emitComment)= "receiveComment($event)"
+  (emitComment)= "createComment(publicacao)"
+  (editComment)= "editComment($event)"
+  (deleteComment)= "deleteComment($event)"
+ [comment]="publicacao.comentarios"></participativo-comment>
 </mat-card>
-
+</div>
+<div *ngIf="last === false && pageEndd === true">
+  <mat-card class="loading" fxLayout="row" fxLayoutGap="10px" *ngFor="let item of items">
+    <div id="img-loading" class="animate"></div>
+    <div id="loading-rows" fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="5px">
+      <section class="animate"></section>
+      <section class="animate"></section>
+    </div>
+  </mat-card>
 </div>

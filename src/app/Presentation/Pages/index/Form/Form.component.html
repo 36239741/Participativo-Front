@@ -13,6 +13,9 @@ class="content">
         <mat-error *ngIf="form.get('cpf').hasError('required')">
           Cpf é <strong>obrigatório</strong>
         </mat-error>
+        <mat-error *ngIf="form.get('cpf').hasError('cpfValid') && !form.get('cpf').hasError('required')">
+          CPf é <strong>inválido</strong>
+        </mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Data de nascimento</mat-label>
@@ -21,6 +24,9 @@ class="content">
         <mat-datepicker #picker1></mat-datepicker>
         <mat-error *ngIf="form.get('dataNascimento').hasError('required')">
           Data de nascimento é <strong>obrigatória</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('dataNascimento').hasError('ageValid') && !form.get('dataNascimento').hasError('required')">
+          Não e permitido cadastro de menores de 13 anos
         </mat-error>
       </mat-form-field>
     <mat-form-field >

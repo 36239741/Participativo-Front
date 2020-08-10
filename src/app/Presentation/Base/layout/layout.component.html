@@ -1,11 +1,39 @@
 <mat-toolbar>
+  <mat-toolbar-row
+  fxHide.md
+  fxHide.lg
+  fxHide.xl
+  fxLayout="row"
+  fxLayoutGap="10px"
+  fxLayoutAlign="start center"
+  >
+    <img 
+    id="logo" 
+    src="../../../../assets/imgs/logomarca-participativo-blue.png" 
+    alt="Logo Marca.">
+    <mat-form-field color="primary" appearance="legacy">
+      <mat-icon matPrefix>search</mat-icon>
+      <input type="search" matInput placeholder="Pesquisar publicações" />
+    </mat-form-field>
+  </mat-toolbar-row>
   <mat-toolbar-row>
-    <img id="logo" src="../../../../assets/imgs/logomarca-participativo-blue.png" alt="Logo Marca.">
     <div 
     fxLayout="row"
-    fxLayoutAlign="center center"
+    fxLayoutAlign="space-between"
     class="icons">
 
+  <div id="logo-search">
+    <img 
+    fxHide.xs
+    fxHide.sm
+    id="logo" 
+    src="../../../../assets/imgs/logomarca-participativo-blue.png" 
+    alt="Logo Marca.">
+
+  </div>
+    <div id="menu"
+    fxLayout="row"
+    fxLayoutAlign="center center">
       <nav mat-tab-nav-bar>
         <a 
         *ngFor="let menu of menu"
@@ -19,12 +47,29 @@
         </a>
       </nav>
     </div>
+    <div
+    fxHide.xs
+    fxHide.md
+    fxHide.sm
+    class="search absolute"
+    fxLayout="row"
+    fxLayoutAlign="end">
+      <mat-form-field appearance="legacy">
+        <mat-label>Buscar</mat-label>
+        <input matInput placeholder="Digite a sua busca">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
 
   <mat-sidenav-container>
-    <mat-sidenav opened mode="side">
+    <mat-sidenav opened mode="side"
+    fxHide.xs
+    fxHide.md
+    fxHide.sm>
       <mat-list>
         <a 
         *ngFor="let menus of menu"
@@ -41,10 +86,14 @@
       </mat-list>
     </mat-sidenav>
     <mat-sidenav-content
+    id="sidenav"
     fxLayout="row"
+    (scroll)="onScroll($event)"
     fxLayoutAlign="center start"
     >
-    <div class="home-content">
+    <div class="home-content"
+    [ngClass.xs]="'home-content-xs-sm'"
+    [ngClass.sm]="'home-content-xs-sm'">
       <router-outlet></router-outlet>
     </div>
     </mat-sidenav-content>

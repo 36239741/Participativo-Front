@@ -1,0 +1,88 @@
+
+  <div 
+  class="form-container">
+  <form 
+  fxLayout="row"
+  fxLayoutGap="5px"
+  [formGroup]="form">
+    <mat-card    
+    fxLayout="column">
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Qual é a categoria?</mat-label>
+        <mat-select formControlName="categoriaId">
+          <mat-option 
+          *ngFor="let categoria of (findAllCategoria | async)" 
+          value="{{ categoria.id }}">{{ categoria.nome }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('categoriaId').hasError('required')">
+          O campo categoria é <strong>obrigatório</strong>
+        </mat-error>
+      </mat-form-field>
+      <h5>Qual é a o endereço?</h5>
+      <mat-form-field appearance="legacy" color="primary">
+        <mat-label>Você sabe qual é o CEP?</mat-label>
+        <input matInput placeholder="Digite um cep" formControlName="cep">
+        <mat-error *ngIf="form.get('cep').hasError('required')">
+          O campo cep é <strong>obrigatório</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Em qual bairro fica?</mat-label>
+        <mat-select formControlName="bairroId">
+          <mat-option 
+          *ngFor="let bairro of (findAllBairro | async)"
+          value="{{ bairro.id }}">{{ bairro.nome }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('bairroId').hasError('required')">
+          O campo bairro é <strong>obrigatório</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="legacy" color="primary">
+        <mat-label>Qual é a rua?</mat-label>
+        <input matInput placeholder="Digite o nome da rua" formControlName="longadouro">
+        <mat-error *ngIf="form.get('longadouro').hasError('required')">
+          O campo longadouro é <strong>obrigatório</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="legacy" color="primary">
+        <mat-label>Você sabe o número?</mat-label>
+        <input matInput placeholder="Digite o número do local" formControlName="numero">
+        <mat-error *ngIf="form.get('numero').hasError('required')">
+          O campo número é <strong>obrigatório</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="legacy" color="primary">
+        <mat-label>Tem algum ponto de referência?</mat-label>
+        <input matInput placeholder="Digite um ponto de referência" formControlName="complemento">
+        <mat-error *ngIf="form.get('complemento').hasError('required')">
+          O campo complemento é <strong>obrigatório</strong>
+        </mat-error>
+      </mat-form-field>
+ 
+  </mat-card>
+  <mat-card
+  fxLayoutAlign="space-between"
+  fxLayout="column">
+  <div
+  fxLayout="column">
+    <h5>Faça uma descrição !</h5>
+    <mat-form-field appearance="fill" id="textarea">
+      <textarea matInput formControlName="descricao"></textarea>
+      <mat-error *ngIf="form.get('descricao').hasError('required')">
+        O campo descrição é <strong>obrigatório</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <input matInput placeholder="Escolha uma foto">
+      <mat-icon matSuffix (click)="openFile()" >upload_file</mat-icon>
+    </mat-form-field>
+    <input type="file" id="upload" (change)="handleFileInput($event.target.files)"/>
+  </div>
+  <div
+  fxLayout="column">
+    <span>Ao clicar em publicar, você concorda com os</span><strong><a [routerLink]="['rules', '/publicar']">Termos e Política de dados.</a></strong>
+    <button mat-raised-button color="primary" id="publicar-btn">Publicar</button>
+  </div>
+  </mat-card>
+</form>
+</div>

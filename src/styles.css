@@ -32,7 +32,10 @@ button {
 font-size: 0.875rem;
 letter-spacing: 1.25px;
 }
-
+span, p {
+font-size: 1rem;
+letter-spacing: 0.25;
+}
 .content {
     height: 100%;
     padding: 50px;
@@ -40,6 +43,11 @@ letter-spacing: 1.25px;
 @media(max-width: 1279px) {
     .content {
         padding: 25px;
+    }
+}
+@media(max-width: 959px) {
+    html {
+        font-size: 0.75rem !important;
     }
 }
 
@@ -51,4 +59,11 @@ letter-spacing: 1.25px;
 }
 .error {
     background-color: red;
+}
+.dialog-reset >  mat-dialog-container {
+    padding: 0px;
+    border-radius: 5px;
+}
+a {
+    cursor: pointer;
 }

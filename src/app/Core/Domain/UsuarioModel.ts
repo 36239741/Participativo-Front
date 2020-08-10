@@ -6,4 +6,5 @@ export class UsuarioModel {
     sobrenome: string;
     telefone: string;
     senha:  string;
+    avatar?: string;
 }

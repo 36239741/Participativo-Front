@@ -6,21 +6,33 @@ import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/Presentation/Shared/snackbar/snackbar.service';
 import { Injectable } from '@angular/core';
 import { Usuario } from 'src/app/Data/Entity/IUsuarioEntity';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
     providedIn: 'root'
   })
 export class UsuarioUseCase implements IUsuarioUserCase<Usuario, any> {
+    jwtHelper = new JwtHelperService();
     constructor(private UsuarioRepository: UsuarioRepositoryService,
                 private snackBar: SnackbarService, 
                 private router: Router) {
 
     }
+    findOne() {
+        let { sub } = this.jwtHelper.decodeToken(localStorage.getItem('token'))
+        let param = {
+          'value': sub
+        }
+        return this.UsuarioRepository.findOne(param);
+    }
+    sendNewPassword(password: any) {
+        return this.UsuarioRepository.sendNewPassowrd(password);
+    }
     create(params: Usuario): UsuarioModel {
         params.tipo = 1;
         let usuario: UsuarioModel;
         if(params != null) {
-            this.UsuarioRepository.register(params).subscribe( (response) => {
+            this.UsuarioRepository.create(params).subscribe( (response) => {
                 usuario = response;
                 this.router.navigate(['/sucesso/registro'])
             }, err => {
@@ -38,7 +50,7 @@ export class UsuarioUseCase implements IUsuarioUserCase<Usuario, any> {
     update(params: Usuario): Observable<any> {
         throw new Error("Method not implemented.");
     }
-    redefinePassword(params: Usuario): Observable<any> {
-        throw new Error("Method not implemented.");
+    redefinePassword(email: any): Observable<any> {
+        return this.UsuarioRepository.redefinePassword(email);
     }
 }

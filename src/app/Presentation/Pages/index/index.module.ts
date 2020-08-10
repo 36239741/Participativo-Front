@@ -11,7 +11,8 @@ import { FormComponent } from './Form/Form.component';
 import { SuccessComponent } from './success/success.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxModule } from '../../Shared/ngxMask/ngx-mask/ngx-mask.module';
-import { RulesComponent } from './Form/rules/rules.component';
+import { RulesModule } from '../../Shared/rules/rules.module';
+import { ForgotPasswordFormComponent } from './ForgotPassword/forgot-password-form/forgot-password-form.component';
 
 
 @NgModule({
@@ -20,8 +21,8 @@ import { RulesComponent } from './Form/rules/rules.component';
     UserActionComponent,
     IndexComponent,
     FormComponent,
+    ForgotPasswordFormComponent,
     SuccessComponent,
-    RulesComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +30,8 @@ import { RulesComponent } from './Form/rules/rules.component';
     FlexLayoutModule,
     MaterialModule,
     ReactiveFormsModule,
-    NgxModule
+    NgxModule,
+    RulesModule
   ],
 })
 export class IndexModule { }

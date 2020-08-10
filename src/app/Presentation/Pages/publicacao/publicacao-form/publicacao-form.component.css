@@ -1,0 +1,25 @@
+.form-container > form > mat-card {
+    color: #01579b;
+    width: 50%;
+}
+mat-icon {
+    cursor: pointer;
+}
+#upload {
+    display: none;
+}
+a {
+    color: #01579b;
+}
+a:visited {
+    color: #01579b;
+}
+span {
+    margin-top: 20px;
+}
+#textarea {
+    margin-top: 20px;
+}
+#publicar-btn {
+    margin-top: 40px;
+}

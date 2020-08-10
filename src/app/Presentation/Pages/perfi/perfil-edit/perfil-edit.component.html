@@ -1,0 +1,56 @@
+<div fxLayoutAlign="space-between" class="header">
+  <h5>Editar perfil</h5>
+  <mat-icon (click)="closeEdit()">close</mat-icon>
+</div>
+
+<form 
+    fxLayout="column"
+    [formGroup]="form">
+
+    <mat-form-field >
+      <mat-label>Nome</mat-label>
+      <input matInput placeholder="Digite seu nome" formControlName="nome" required>
+      <mat-error *ngIf="form.get('nome').hasError('required')">
+        Nome é <strong>obrigatório</strong>
+      </mat-error>
+  </mat-form-field>
+  <mat-form-field >
+      <mat-label>Sobrenome</mat-label>
+      <input matInput placeholder="Digite seu sobrenome" formControlName="sobrenome" required>
+      <mat-error *ngIf="form.get('sobrenome').hasError('required')">
+        Sobrenome é <strong>obrigatório</strong>
+      </mat-error>
+  </mat-form-field>
+    <mat-form-field>
+        <mat-label>Data de nascimento</mat-label>
+        <input matInput [matDatepicker]="picker1" formControlName="dataNascimento" required>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <mat-error *ngIf="form.get('dataNascimento').hasError('required')">
+          Data de nascimento é <strong>obrigatória</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('dataNascimento').hasError('ageValid') && !form.get('dataNascimento').hasError('required')">
+          Não e permitido cadastro de menores de 13 anos
+        </mat-error>
+      </mat-form-field>
+    <mat-form-field >
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="participativo@example.com" formControlName="email" required>
+        <mat-error *ngIf="form.get('email').hasError('required')">
+          E-mail é <strong>obrigatório</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
+          Por favor insira um endereço de e-mail válido
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field >
+        <mat-label>Telefone</mat-label>
+        <input matInput placeholder="Digite seu telefone" formControlName="telefone" mask="(00) 00009-0000" required>
+        <mat-error *ngIf="form.get('telefone').hasError('required')">
+          Telefone é <strong>obrigatório</strong>
+        </mat-error>
+    </mat-form-field>
+    </form>
+<div fxLayoutAlign="center center" class="salvar">
+  <button mat-raised-button (click)="updateUser()" color="primary">Salvar</button>
+</div>

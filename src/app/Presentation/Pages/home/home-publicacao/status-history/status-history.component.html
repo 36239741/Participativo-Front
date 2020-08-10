@@ -1,0 +1,26 @@
+<div 
+fxLayout="column">
+  <header
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  >
+    <strong><h6>Histórico do status</h6></strong>
+    <button (click)="closeDialog()" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </header>
+  <section
+  *ngFor="let status of data"
+  class="dialog-content"
+  fxLayout="row"
+  fxLayoutAlign="start center"
+  fxLayoutGap="16px">
+  <mat-icon>done</mat-icon>
+  <div
+  fxLayoutGap="5px"
+  fxLayout="column">
+    <strong><p>{{ status.tipo }}</p></strong>
+    <p>{{ status.createdAt }}</p>
+  </div>
+  </section>
+</div>

@@ -11,14 +11,11 @@ constructor( private auth: AuthenticationService,
               private route: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | import("@angular/router").UrlTree | import("rxjs").Observable<boolean | import("@angular/router").UrlTree> | Promise<boolean | import("@angular/router").UrlTree> {
     let looged = this.auth.isLogged();
-    let url = this.route.url;
-    if(looged === true) {
-      this.route.navigate(['home']);
-      return looged
+    if(looged) {
+      return true
     }
-    if(looged === false && url == '/' || looged === false && url == '/recuperar-senha' || looged === false && url == '/registrar' || looged === false && url == '/sucesso') {
-      return looged = true;
-    }
+    this.route.navigate([''])
+    return false
   }
 
 }

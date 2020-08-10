@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 
 import { Menu } from './menu.interface';
 import { Router } from '@angular/router';
+import { PageEndService } from './page-end.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class LayoutComponent implements OnInit {
   activeLink: string[] = []
   constructor( 
     private router: Router,
+    private behavior: PageEndService
    ) { 
   }
 
@@ -33,6 +35,13 @@ export class LayoutComponent implements OnInit {
       return elemt.link === url;
     });
     this.activeLink.push(activeLink[0].link);
+  }
+
+  @HostListener('window:scroll', ['$event']) // for window scroll events
+  onScroll(event) {
+    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
+      this.behavior.setBehavior(true);
+    }
   }
 
 

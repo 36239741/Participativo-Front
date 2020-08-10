@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormGroupDirective, NgForm, AbstractControl } from '@angular/forms';
 import { Usuario } from 'src/app/Data/Entity/IUsuarioEntity';
 import { UsuarioUseCase } from 'src/app/Core/Usecases/UsuarioUseCase';
 import { ErrorStateMatcher } from '@angular/material/core';
+import * as moment from 'moment';
+import * as libCpf from 'gerador-validador-cpf';
+import { SnackbarService } from 'src/app/Presentation/Shared/snackbar/snackbar.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -19,6 +22,7 @@ export class FormComponent implements OnInit {
   hide = true;
   form: FormGroup; 
   constructor(private formBuilder: FormBuilder,
+              private snackBar: SnackbarService,
               private usuarioUserCase: UsuarioUseCase) {}
 
   ngOnInit() {
@@ -54,8 +58,8 @@ Instancia um reactive form
 */
   createForm() {
    this.form = this.formBuilder.group({
-      cpf: new FormControl('', Validators.required),
-      dataNascimento: new FormControl('', Validators.required),
+      cpf: new FormControl('', [Validators.required, this.cpfValidator]),
+      dataNascimento: new FormControl('', [Validators.required, this.ageValidator]),
       email: new FormControl('', [Validators.required, Validators.email]),
       nome: new FormControl('', Validators.required),
       sobrenome: new FormControl('', Validators.required),
@@ -67,7 +71,24 @@ Instancia um reactive form
   Valida o formulario
   */
   validateForm(): boolean {
-    return this.form.valid ? true : false;
+    if(this.form.valid) {
+      return true
+    }else {
+      this.snackBar.open({ message: 'Preencha corretamenta os campos do formulario', duration: 5 , customClass: 'error' });
+      return false
+    }
+  }
+
+  ageValidator(control: AbstractControl) {
+    const date = control.value;
+    let age = Math.floor(moment(new Date()).diff(moment(date),'years',true));
+    const valid = age > 13 ? null : { ageValid: true }; 
+    return valid;
+  }
+  cpfValidator(control: AbstractControl) {
+    const cpf = control.value;
+    let valid = libCpf.validate(cpf) ? null : { cpfValid: true };
+    return valid;
   }
 
 }
