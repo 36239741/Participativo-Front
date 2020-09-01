@@ -1,12 +1,23 @@
 .publicacao-content {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 45px;
 }
-header img {
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    border: 1px solid #D3D3D3;
+mat-card {
+    padding-top: 0px;
+}
+#descricao {
+    margin-top: 16px;
+}
+.user-publicacao {
+    text-transform: capitalize;
+    color: #0288d1;
+    
+}
+.imgHidden {
+    display: none;
+}
+.local-content{
+   top: 0px !important;
 }
 .history-status {
     cursor: pointer;
@@ -19,15 +30,15 @@ header img {
     height: 400px;
 }
 .local-publicacao {
-    width: 280px;
+    width: 300px;
     height: 70px;
-    top: -40px;
-    right: -249px;
-    position: relative;
     border-radius: 5px;
-    background-color: #01579b;
+    background-color: #0288d1;
     color: white;
     padding: 10px;
+    margin-top: 20px;
+    border-radius: 40px;
+
 }
 .local-publicacao span {
     font-size: 1rem;
@@ -36,10 +47,23 @@ header img {
 }
 .tipo-publicacao {
     padding: 10px;
+    width: 300px;
+    height: 50px;
+    border-radius: 40px;
+    padding: 10px;
+    position: relative;
+    top: -25px;
 }
 .info-publicacao {
     margin-top: 40px;
     margin-bottom: 20px;
+    color: #0288d1;
+}
+#icon-apoiar {
+    color: red;
+}
+#icon-comment {
+    color: #0288d1;
 }
 .actions-publicacao {
     width: 50%;
@@ -52,11 +76,9 @@ header img {
     color: white;
     background-color: green;
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 40px;
 }
 .status-publicacao :nth-child(2){
-    font-weight: bold;
-    text-transform: uppercase;
     margin-left: 20px;
 }
 .reclamacao {
@@ -64,8 +86,8 @@ header img {
     color: white;
 }
 .sugestao {
-    background-color: yellow;
-    color: black;
+    background-color: orange;
+    color: white;
 }
 .elogio {
     background-color: green;
@@ -89,7 +111,7 @@ header img {
     height: 60px;
 }
 .apoiado {
-    color: #01579b;
+    color: #0288d1 !important;
 }
 #img-loading {
     background-color: #A9A9A9;
@@ -118,16 +140,5 @@ header img {
     header img {
         width: 50px;
         height: 50px;
-    }
-    .local-publicacao {
-        width: 280px;
-        height: 70px;
-        top: -40px;
-        right: -50px;
-        position: relative;
-        border-radius: 5px;
-        background-color: #01579b;
-        color: white;
-        padding: 10px;
     }
 }

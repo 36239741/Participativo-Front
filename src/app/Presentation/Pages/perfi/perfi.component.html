@@ -5,14 +5,33 @@
   fxLayoutAlign="center center"
   fxLayoutGap="5px"
   >
-    <img src="../../../../assets/imgs/none-avatar.jpg" alt="Logo do usuario.">
+  <input type="file" id="upload" (change)="handleFileInput($event.target.files)">
+
+    <a 
+    (click)="openFile()"
+    (mouseover)="imageCommentShow()"
+    (mouseleave)="imageCommentHide()"
+    fxLayoutAlign="center center"
+    fxLayout="column"
+    > 
+    <participativo-avatar 
+    id="home-avatar"
+    borderColor="2px solid #0288d1" 
+    [src]="usuarioImageUrl + user?.avatar | img:'../../../../assets/imgs/no_user_logo.png' | async"
+    alt="Foto do usuário."
+    width="70px" height="70px"></participativo-avatar>
+    <span [ngClass]="{'imageCommmentShow': showCommentImage === true}" class="imageCommment">Click aqui para alterar a imagem de perfil</span>
+    </a>
     <h5>{{ user.nome }} {{ user.sobrenome }}</h5>
   </div>
   <mat-card>
   <div
   fxLayoutAlign="space-between">
     <h5>Sobre</h5>
-    <button mat-raised-button (click)="openEdit()">Editar</button>
+    <div fxLayoutGap="10px">
+      <button mat-raised-button (click)="openDelete()">Deletar perfil</button>
+      <button mat-raised-button (click)="openEdit()">Editar</button>
+    </div>
   </div>
   <div
   fxLayoutGap="20px"
@@ -46,6 +65,6 @@
       <mat-icon>phone</mat-icon>
       <p>{{ user.telefone | mask:"(00) 00009-0000" }}</p>
     </section>
-
   </div>
+
 </mat-card>

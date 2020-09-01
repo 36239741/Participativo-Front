@@ -1,0 +1,15 @@
+#upload {
+    display: none;
+}
+mat-card  {
+    width: 100%;
+}
+h5 {
+    margin-bottom: 10px;
+}
+mat-icon {
+    cursor: pointer;
+}
+button {
+    margin-top: 20px;
+}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IPublicacaoRepository, filter } from 'src/app/Core/Interfaces/repository/IPublicacaoRepository';
 import { Publicacao } from '../Entity/IPublicacaoEntity';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { PublicacaoTimelineContent } from '../Entity/IPublicacaioTimeLineEntity';
 import { Comment } from '../Entity/ICommentEntity';
@@ -11,11 +11,14 @@ import { Comment } from '../Entity/ICommentEntity';
 @Injectable({
   providedIn: 'root'
 })
-export class PublicacaoRepositoryService implements IPublicacaoRepository <any, Publicacao>{
+export class PublicacaoRepositoryService implements IPublicacaoRepository <any, any>{
 
 constructor(
   private http: HttpClient,
   ) { }
+  findByParams(params: HttpParams): Observable<any> {
+    return this.http.get(environment.API_URL + 'publicacoes/search', { params: params });
+  }
   desapoiar(usuarioUuid: any, params: any): Observable<any> {
     return this.http.delete(environment.API_URL + 'apoios/' + usuarioUuid + '/' + params, {});
   }
@@ -32,11 +35,12 @@ constructor(
   editComment(corpo: any, uuid: any): Observable<any> {
     return this.http.put(environment.API_URL + 'comentarios/' + uuid, { corpo: corpo });
   }
-  create(params: Publicacao): Observable<Publicacao> {
-    throw new Error("Method not implemented.");
+  create(params: Publicacao): Observable<any> {
+    return this.http.post(environment.API_URL + 'publicacoes', params)
+    
   }
-  update(params: Publicacao): Observable<Publicacao> {
-    throw new Error("Method not implemented.");
+  update(params: any, uuid: string): Observable<any> {
+    return this.http.put<any>(environment.API_URL + 'publicacoes/' + uuid ,params);
   }
   findAll(filter: filter ): Observable<PublicacaoTimelineContent> {
     let params = {
@@ -47,12 +51,12 @@ constructor(
     }
     return this.http.get<PublicacaoTimelineContent>(environment.API_URL + 'publicacoes/timeline', {params: params});
   }
-  findOne(params: Publicacao): Observable<Publicacao> {
-    throw new Error("Method not implemented.");
+  findOne(uuid: any): Observable<Publicacao> {
+    return this.http.get<Publicacao>(environment.API_URL + 'publicacoes/' + uuid);
 
   }
-  delete(params: Publicacao): Observable<Publicacao> {
-    throw new Error("Method not implemented.");
+  delete(uuid: any): Observable<any> {
+    return this.http.put(environment.API_URL + 'publicacoes/deleteLogico/' + uuid, {});
   }
 
 }

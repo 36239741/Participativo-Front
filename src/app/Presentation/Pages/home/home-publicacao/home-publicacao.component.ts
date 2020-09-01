@@ -1,16 +1,19 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy, Output, EventEmitter} from '@angular/core';
 import { PublicacaoTimelineContent, PublicacaoTimeline, Comentario } from 'src/app/Data/Entity/IPublicacaioTimeLineEntity';
 import { PublicacaoUseCase } from 'src/app/Core/Usecases/PublicacaoUseCase';
 import { SnackbarService } from 'src/app/Presentation/Shared/snackbar/snackbar.service';
 import { Unsubscribable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { StatusHistoryComponent } from './status-history/status-history.component';
-import { PageEndService } from 'src/app/Presentation/Base/layout/page-end.service';
-import { ActivatedRoute } from '@angular/router';
 import { UsuarioUseCase } from 'src/app/Core/Usecases/UsuarioUseCase';
 import { Comment } from '../../../../Data/Entity/ICommentEntity';
 import { Usuario } from 'src/app/Data/Entity/IUsuarioEntity';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { PublicacaoEditComponent } from './publicacao-edit/publicacao-edit.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { MapComponent } from 'src/app/Presentation/Shared/map/map.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'participativo-home-publicacao',
@@ -19,34 +22,64 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
 
-  publicacaoTimeLine: PublicacaoTimelineContent;
-  publicacaoContent: PublicacaoTimeline[] = [];
+  @Input() publicacaoTimeLine: PublicacaoTimelineContent;
+  @Output() lastPage: EventEmitter<any> = new EventEmitter();
+  @Output() timeLineContent: EventEmitter<any> = new EventEmitter();
+  publicacaoContent: any[] = [];
   unsubscribe: Unsubscribable[] = [];
-  last: boolean = false;
-  pageEndd: boolean = false;
   show: {[key: string]: boolean} = {};
   apoio: {[key: number]: boolean} = {};
+  imgError: {[key: number]: boolean} = {};
   comment: string;
+  usuario: Usuario;
   items = [1,2,3];
+  publicacaoImageUrl = environment.IMG_URL_PUBLICATION;
+  usuarioImageUrl = environment.IMG_URL_USER;
   jwtHelperService = new JwtHelperService();
   constructor(private publicacaoUseCase: PublicacaoUseCase,
-              private route: ActivatedRoute,
                private dialogRef: MatDialog,
+               private route: ActivatedRoute,
+               private router: Router,
                private usuarioUseCase: UsuarioUseCase,
-               private behavior: PageEndService,
-               private snackBar: SnackbarService ) {
-                this.route.data.subscribe(() => {
-                  this.publicacaoTimeLine = this.route.snapshot.data.data;
-                  this.publicacaoContent = this.publicacaoTimeLine.content;
-                  this.last = this.publicacaoTimeLine['last'];
-                });
-                }
+               private snackBar: SnackbarService ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
   }
   ngOnInit() {
-    this.pageEnd();
+    this.publicacaoContent = this.publicacaoTimeLine.content;
+    this.publicacaoContent.sort((a, b) => {
+      let dateA = moment(a.createdAt, 'DD-MM-YYYY H:m');
+      let dateB = moment(b.createdAt, 'DD-MM-YYYY H:m');
+      if (dateA.isAfter(dateB)) return -1;
+      if (dateB.isAfter(dateA)) return 1;
+      return 0
+    })
     this.publicationApoiada();
+    this.route.data.subscribe(() => {
+      this.usuario = this.route.snapshot.data.user
+    });
+  }
+  showAndHidden(index) {
+    this.show[index] ? this.show[index] = false : this.show[index] = true
+  }
+  edit(publicacao: any) {
+    this.dialogRef.open(PublicacaoEditComponent, {
+      width: '35vw',
+      height: '80vh',
+      data: publicacao,
+      disableClose: true
+    }).afterClosed().subscribe(() => {this.refreshPage()})
+  }
+  async delete(uuid: string) {
+    await this.publicacaoUseCase.delete(uuid).toPromise();
+    this.refreshPage();
+  }
+  openMap(endereco) {
+    this.dialogRef.open(MapComponent, {
+      data: endereco,
+      panelClass: ['dialog-reset'],
+      disableClose: true
+    })
   }
   /* Funcao verifica as publicacao apoiadas */
   publicationApoiada() {
@@ -70,6 +103,7 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
       try {
         let usuario: Usuario = await this.usuarioUseCase.findOne().toPromise();
         await this.publicacaoUseCase.desapoiar(usuario.uuid, publicacao.uuid).toPromise();
+        this.refreshPage()
         this.apoio[publicacao.uuid] = false
   
       } catch (error) {
@@ -82,6 +116,7 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
     try {
       let usuario: Usuario = await this.usuarioUseCase.findOne().toPromise();
       await this.publicacaoUseCase.apoiar(usuario.uuid, publicacao.uuid).toPromise();
+      this.refreshPage()
       this.apoio[publicacao.uuid] = true
     } catch (error) {
       this.snackBar.open({ message: error.message, duration: 5, customClass: 'error' })
@@ -90,9 +125,17 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
   }
   /* Faz uma requisicao nova e popula a timeline com os dados atualizados */
   async refreshPage() {
-    this.publicacaoTimeLine =  await this.publicacaoUseCase.findAll({ page: '0', linesPerPage: '2',orderBy: 'createdAt', direction:'DESC' }).toPromise();
-    this.publicacaoContent = this.publicacaoTimeLine.content;
-    this.last = this.publicacaoTimeLine['last'];
+    if(this.router.url === '/home') {
+      this.publicacaoTimeLine =  await this.publicacaoUseCase.findAll({ page: '0', linesPerPage: '5',orderBy: 'createdAt', direction:'DESC' }).toPromise();
+      this.publicacaoContent = this.publicacaoTimeLine.content;
+      this.lastPage.emit(this.publicacaoTimeLine['last']);
+      this.timeLineContent.emit(this.publicacaoTimeLine);
+    }else {
+      let publicacao = await this.publicacaoUseCase.findOne(this.route.snapshot.params.uuid).toPromise();
+      this.publicacaoContent = [];
+      this.publicacaoContent.push(publicacao);
+    }
+
   }
   /* Funcao faz a edicao do comentario */
   async editComment(comment: Comentario) {
@@ -133,14 +176,6 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
       } catch (error) {
         this.snackBar.open({ message: error.message, duration: 5, customClass: 'error' })
       }
-      let data = new Date().toLocaleDateString();
-      let provisionalComment: Comentario = {
-        corpo: this.comment,
-        createdAt:  data,
-        deletedAt: null,
-        updatedAt: null,
-        usuario: usuario
-      }
       let comment: Comment = {
         corpo: this.comment,
         publicacao: publicacao.uuid,
@@ -148,7 +183,7 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
       }
       try {
         await this.publicacaoUseCase.comment(comment).toPromise();
-        publicacao.comentarios.push(provisionalComment);
+        this.refreshPage();
       } catch (error) {
         this.snackBar.open({ message: error.message, duration: 5, customClass: 'error' })
       }
@@ -161,21 +196,6 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
     this.comment = comment;
   }
 
-  /* Funcao verifica se esta no fim da pagina e nao e a ultima pagina do pageable e faz um nova requisicao para pagina seguinte */
- pageEnd() {
-    this.behavior.getBehavior().subscribe(result => {
-      this.pageEndd = result;
-      if(result === true && this.publicacaoTimeLine['last'] === false) {
-        const page: number = this.publicacaoTimeLine.number;
-        let nextPage = page + 1
-        this.publicacaoUseCase.findAll({ page: String(nextPage), linesPerPage: '2',orderBy: 'createdAt', direction:'DESC' }).subscribe(timeline => {
-          this.publicacaoTimeLine = timeline
-          this.publicacaoTimeLine.content.map(publicacao => { this.publicacaoContent.push(publicacao) })
-          this.last = timeline['last']
-        })
-      }
-    })
-  }
 
   /*
   Funcao abre e fecha a area de comentario

@@ -1,10 +1,10 @@
-<div class="comment" *ngFor="let comment of comment, let i = index">
+<div class="comment" *ngFor="let comment of comment , let i = index">
   <header
   fxLayout="row"
   fxLayoutGap="5px"
   fxLayoutAlign="start start"
   >
-    <img class="avatar"  src="../../../../../../assets/imgs/none-avatar.jpg" alt="Foto do usuario.">
+    <img class="avatar" [attr.src]="usuarioImageUrl + comment.usuario.avatar | img:'../../../../../../assets/imgs/no_user_logo.png' | async"   alt="Foto do usuario.">
     <div
     *ngIf="!show[i]"
     class="comment-content"
@@ -12,7 +12,7 @@
     fxLayoutAlign="end start"
     fxLayoutGap="3px"
     >
-      <strong><p>{{ comment.usuario.nome }} {{ comment.usuario.sobrenome }}</p></strong>
+      <strong><p id="username">{{ comment.usuario.nome }} {{ comment.usuario.sobrenome }}</p></strong>
       <p>{{ comment.corpo }}</p>
     </div>
     <div
@@ -29,7 +29,7 @@
       </mat-form-field>
     </div>
     <div>
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <button *ngIf="comment.usuario.uuid === usuario?.uuid" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_horiz</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
@@ -53,9 +53,9 @@ fxLayout="row"
 fxLayoutGap="5px"
 fxLayoutAlign="start center"
 class="comment-area">
-<img class="avatar"  src="../../../../../../assets/imgs/none-avatar.jpg" alt="Foto do usuario.">
+<img class="avatar" [attr.src]="usuarioImageUrl + usuario?.avatar | img:'../../../../../../assets/imgs/no_user_logo.png' | async"  alt="Foto do usuario.">
 
-<mat-form-field color="primary">
+<mat-form-field color="primary" appearance="fill">
   <input matInput placeholder="Escreva um comentário" [formControl]="commentInput" (keyup.enter)="commentEmit()">
   <mat-icon matSuffix class="iconCommentInput" (click)="commentEmit()" >send</mat-icon>
 </mat-form-field>

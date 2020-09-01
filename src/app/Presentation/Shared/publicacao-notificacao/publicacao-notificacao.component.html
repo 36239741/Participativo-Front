@@ -1,0 +1,36 @@
+<mat-card
+*ngFor="let publicacao of publicacoes; let i = index"
+>
+  <div
+    
+   class="notificacao">
+   <a [routerLink]="'/home/ver-publicacao/' + publicacao.uuid" (click)="readNotifications(data[i].uuid, data[i].readAt)">
+    <div
+    class="notificacao-content"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="5px"
+    [ngClass]="{'read': data[i].readAt === null}"
+    >
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="40px">
+      <section fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center start"> 
+        <img id="user-img" [attr.src]="usuarioImageUrl + data[i].gerador.avatar | img:'../../../../../assets/imgs/no_user_logo.png' | async" alt="Foto do usuario">
+    </section>
+     <section fxLayout="column" fxLayoutGap="5px">
+      <p class="color">
+        <span>{{ data[i].gerador.nome }} </span> <strong class="toUppeCase">{{ data[i].tipo | notificationsType  }}</strong> sua publicação
+      </p>
+      <section fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <mat-icon class="color">watch_later</mat-icon><p class="color"> em {{ data[i].createdAt }}</p>
+      </section>
+     </section>
+    </div>
+
+       <img id="img-publicacao" 
+       [attr.src]="publicacaoImageUrl + publicacao.image  | img | async" 
+       />
+      </div>
+    </a>
+    </div>
+
+</mat-card>

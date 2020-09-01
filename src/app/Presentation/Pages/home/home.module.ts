@@ -11,6 +11,15 @@ import { StatusHistoryComponent } from './home-publicacao/status-history/status-
 import { LastPositionPipeModule } from '../../Shared/pipes/LastPositionPipe/last-position-pipe.module';
 import { CommentComponent } from './home-publicacao/comment/comment.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DateSeparationModule } from '../../Shared/pipes/date-separation/date-separation.module';
+import { PublicacaoEditComponent } from './home-publicacao/publicacao-edit/publicacao-edit.component';
+import { NgxViacepModule } from '@brunoc/ngx-viacep';
+import { ImgModule } from '../../Shared/pipes/img/img.module';
+import { OrderArrayModule } from '../../Shared/pipes/order-array/order-array.module';
+import { PublicationFindComponent } from './publication-find/publication-find.component';
+import { MapModule } from '../../Shared/map/map.module';
+import { MapComponent } from '../../Shared/map/map.component';
+import { AvatarModule } from '../../Shared/avatar/avatar.module';
 
 
 @NgModule({
@@ -18,7 +27,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     HomePublicacaoComponent,
     StatusHistoryComponent,
-    CommentComponent
+    CommentComponent,
+    PublicacaoEditComponent,
+    PublicationFindComponent
   ],
   imports: [
     CommonModule,
@@ -27,10 +38,18 @@ import { ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     FlexLayoutModule,
     LastPositionPipeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DateSeparationModule,
+    NgxViacepModule,
+    ImgModule,
+    OrderArrayModule,
+    MapModule,
+    AvatarModule
   ],
   entryComponents: [
-    StatusHistoryComponent
+    StatusHistoryComponent,
+    PublicacaoEditComponent,
+    MapComponent
   ]
 })
 export class HomeModule { }

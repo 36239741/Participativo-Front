@@ -9,6 +9,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../Shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RulesModule } from '../../Shared/rules/rules.module';
+import { NgxViacepModule } from '@brunoc/ngx-viacep';
+import { NgxModule } from '../../Shared/ngxMask/ngx-mask/ngx-mask.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,10 @@ import { RulesModule } from '../../Shared/rules/rules.module';
     FlexLayoutModule,
     MaterialModule,
     ReactiveFormsModule,
-    RulesModule
+    RulesModule,
+    NgxViacepModule,
+    NgxModule,
+  
   ],
   declarations: [PublicacaoComponent, PublicacaoFormComponent]
 })

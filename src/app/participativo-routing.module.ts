@@ -13,13 +13,13 @@ const routes: Routes = [
   {path: 'perfil',
   loadChildren: () => import('./Presentation/Pages/perfi/perfi.module').then(m => m.PerfiModule)},
   {path: 'publicar',
-  loadChildren: () => import('./Presentation/Pages/publicacao/publicacao.module').then(m => m.PublicacaoModule)}
+  loadChildren: () => import('./Presentation/Pages/publicacao/publicacao.module').then(m => m.PublicacaoModule)},
 ];
 
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)],
+    RouterModule.forRoot(routes),],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

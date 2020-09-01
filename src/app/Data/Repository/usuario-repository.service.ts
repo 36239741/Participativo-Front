@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { IUsuarioRepository } from 'src/app/Core/Interfaces/repository/IUsuarioRepository';
 import { Usuario } from '../Entity/IUsuarioEntity';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { JwtHelperService } from "@auth0/angular-jwt";
 import { UsuarioUpdateEntity } from '../Entity/IUsuarioUpdateEntity';
 
 
@@ -18,7 +17,19 @@ export class UsuarioRepositoryService implements IUsuarioRepository<Usuario, Usu
 constructor(
   private http: HttpClient,
 ) { }
+  delete(uuid: any): Observable<Usuario> {
+    return this.http.delete<any>(environment.API_URL + 'deleteLogico/' + uuid);
+  }
+  findOneByUuid(uuid: any): Observable<Usuario> {
+    return this.http.get<Usuario>(environment.API_URL + 'usuarios/' + uuid);
+  }
+  notificacoes(uuid: any): Observable<any> {
+    return this.http.get(environment.API_URL + 'notificacoes/list/' + uuid);
+  }
+  active(params: any, email: string): Observable<any> {
+    return this.http.get(environment.API_URL + 'usuarios/validate/' + params + '/' + email);
 
+  }
   sendNewPassowrd(password: any): Observable<any> {
     return this.http.post(environment.API_URL + 'auth/redefinirsenha', 
     { senha: password, token: localStorage.getItem('token')  });

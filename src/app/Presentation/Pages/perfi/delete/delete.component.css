@@ -1,0 +1,10 @@
+h5 {
+    color: #0288d1;
+    margin-bottom: 100px;
+}
+button {
+    width: 150px;
+}
+mat-icon {
+    cursor: pointer;
+}

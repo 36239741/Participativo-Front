@@ -15,11 +15,14 @@ import { LoadingModule } from './Presentation/Shared/loading/loading.module';
 import { LoadingService } from './Presentation/Shared/loading/loading.service';
 import { LoadingInterceptorService } from './Presentation/Shared/loading/loading-interceptor.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+registerLocaleData(localePt, 'pt-BR');
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   [
     AuthGuardService,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     LoadingService,
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptorService, multi: true }
   ],

@@ -3,9 +3,12 @@ import { IPublicacaoUserCase } from '../Interfaces/usecase/IPublicacaoUserCase'
 import { Publicacao } from '../Domain/PublicacaoModel';
 import { PublicacaoRepositoryService } from 'src/app/Data/Repository/publicacao-repository.service';
 import { filter } from '../Interfaces/repository/IPublicacaoRepository';
-import { SnackbarService } from 'src/app/Presentation/Shared/snackbar/snackbar.service';
 import { PublicacaoTimelineContent } from 'src/app/Data/Entity/IPublicacaioTimeLineEntity';
 import { Comment } from '../../Data/Entity/ICommentEntity';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { UsuarioRepositoryService } from 'src/app/Data/Repository/usuario-repository.service';
+import { Usuario } from 'src/app/Data/Entity/IUsuarioEntity';
+import { HttpParams } from '@angular/common/http';
 
 
 
@@ -14,10 +17,18 @@ import { Comment } from '../../Data/Entity/ICommentEntity';
   })
 export class PublicacaoUseCase implements IPublicacaoUserCase<any, any>  {
     timeline: PublicacaoTimelineContent;
-
-    constructor(private publicacaoRepository: PublicacaoRepositoryService) {
+    jwtHelper = new JwtHelperService();
+    constructor(private publicacaoRepository: PublicacaoRepositoryService,
+                private usuarioRepository: UsuarioRepositoryService) {
     
     
+    }
+    findByParams(descricao: any, categorias: any[]) {
+        let categoria = categorias.reduce((a,b) => { return a += ',' + b })
+        let httpParams = new HttpParams();
+        httpParams = httpParams.append('descricao', descricao)
+        httpParams = httpParams.append('categorias', categoria);
+        return this.publicacaoRepository.findByParams(httpParams);
     }
     desapoiar(usuarioUuid: any, params: any) {
         return this.publicacaoRepository.desapoiar(usuarioUuid, params);
@@ -34,21 +45,41 @@ export class PublicacaoUseCase implements IPublicacaoUserCase<any, any>  {
     apoiar(usuarioUuid:any, params: any) {
     return this.publicacaoRepository.apoiar(usuarioUuid,params);
     }
-    create(params: Publicacao) {
-        throw new Error("Method not implemented.");
+    async create(params: Publicacao) {
+    let { sub } = this.jwtHelper.decodeToken(localStorage.getItem('token'));
+    let usuario: Usuario = await this.usuarioRepository.findOne({ value: sub }).toPromise();
+    let publicacao: Publicacao = { 
+        bairroId: params.bairroId, 
+        categoriaId: params.categoriaId,
+        cep: params.cep,
+        complemento: params.complemento,
+        descricao: params.descricao,
+        logradouro: params.logradouro,
+        numero: params.numero,
+        usuarioUuid: usuario.uuid};
+
+    return this.publicacaoRepository.create(publicacao);
     }
-    update(params: Publicacao) {
-        throw new Error("Method not implemented.");
+    update(params: Publicacao, uuid: string) {
+        let publicacaoDto: any = {
+            bairroId: params.bairroId,
+            cep: params.cep,
+            complemento: params.complemento,
+            descricao: params.descricao,
+            logradouro: params.logradouro,
+            numero: params.numero
+        }
+        return this.publicacaoRepository.update(publicacaoDto, uuid);
     }
     findAll(filter?: filter) {
         return this.publicacaoRepository.findAll(filter);
     }
 
-    findOne(params: Publicacao) {
-        throw new Error("Method not implemented.");
+    findOne(uuid: any) {
+        return this.publicacaoRepository.findOne(uuid);
     }
-    delete(params: Publicacao) {
-        throw new Error("Method not implemented.");
+    delete(uuid: any) {
+       return this.publicacaoRepository.delete(uuid);
     }
     
 

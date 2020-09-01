@@ -14,7 +14,7 @@ constructor(private http: HttpClient) { }
   jwtHelper = new JwtHelperService();
 
   login(login) {
-    return this.http.post(environment.API_URL+ 'login', login, { observe: 'response' })
+    return this.http.post(environment.API_LOGIN, login, { observe: 'response' })
     .pipe(
       map(response => {
         const token = response.headers.get('authorization');

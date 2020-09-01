@@ -18,6 +18,18 @@ export class UsuarioUseCase implements IUsuarioUserCase<Usuario, any> {
                 private router: Router) {
 
     }
+    delete(uuid: any) {
+        return this.UsuarioRepository.delete(uuid);
+    }
+    findOneByUuid(uuid: any) {
+        return this.UsuarioRepository.findOneByUuid(uuid);
+    }
+    notificacoes(uuid: any) {
+        return this.UsuarioRepository.notificacoes(uuid);
+    }
+    active(params: any, email: string) {
+        return this.UsuarioRepository.active(params, email);
+    }
     findOne() {
         let { sub } = this.jwtHelper.decodeToken(localStorage.getItem('token'))
         let param = {

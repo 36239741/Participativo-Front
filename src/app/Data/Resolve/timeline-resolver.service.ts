@@ -12,7 +12,7 @@ constructor(private publicacaoUseCase: PublicacaoUseCase) { }
 
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return await this.publicacaoUseCase.findAll({ page: '0', linesPerPage: '2',orderBy: 'createdAt', direction:'DESC' }).toPromise();
+    return await this.publicacaoUseCase.findAll({ page: '0', linesPerPage: '5',orderBy: 'createdAt', direction:'DESC' }).toPromise();
   }
 
 }

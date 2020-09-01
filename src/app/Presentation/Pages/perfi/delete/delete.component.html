@@ -1,0 +1,11 @@
+<div fxLayout="column" >
+  <div fxLayoutAlign="space-between">
+    <h5>Deseja realmente deletar o seu perfil ?</h5>
+    <mat-icon (click)="close()">close</mat-icon>
+  </div>
+
+  <div fxLayoutAlign="center end " fxLayoutGap="10px" >
+    <button mat-raised-button (click)="close()">Não</button>
+    <button mat-raised-button color="primary" (click)="delete()" >Sim</button>
+  </div>
+</div>

@@ -5,6 +5,9 @@
 mat-icon {
     cursor: pointer;
 }
+button {
+    width: 80%;
+}
 #upload {
     display: none;
 }

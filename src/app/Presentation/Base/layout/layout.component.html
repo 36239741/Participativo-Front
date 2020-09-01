@@ -1,95 +1,77 @@
-<mat-toolbar>
-  <mat-toolbar-row
-  fxHide.md
-  fxHide.lg
-  fxHide.xl
-  fxLayout="row"
-  fxLayoutGap="10px"
-  fxLayoutAlign="start center"
-  >
-    <img 
-    id="logo" 
-    src="../../../../assets/imgs/logomarca-participativo-blue.png" 
-    alt="Logo Marca.">
-    <mat-form-field color="primary" appearance="legacy">
-      <mat-icon matPrefix>search</mat-icon>
-      <input type="search" matInput placeholder="Pesquisar publicações" />
-    </mat-form-field>
-  </mat-toolbar-row>
-  <mat-toolbar-row>
-    <div 
-    fxLayout="row"
-    fxLayoutAlign="space-between"
-    class="icons">
+<mat-toolbar color="primary">
+  <mat-toolbar-row >
 
-  <div id="logo-search">
-    <img 
-    fxHide.xs
-    fxHide.sm
-    id="logo" 
-    src="../../../../assets/imgs/logomarca-participativo-blue.png" 
-    alt="Logo Marca.">
-
-  </div>
     <div id="menu"
     fxLayout="row"
     fxLayoutAlign="center center">
-      <nav mat-tab-nav-bar>
-        <a 
-        *ngFor="let menu of menu"
-        routerLink="{{ menu.link }}"
-        (click)="activeLink = menu.link"
-        [active]="activeLink == menu.link"
-        mat-tab-link >
-          <mat-icon>
-            {{ menu.icon }}
-          </mat-icon>
-        </a>
-      </nav>
-    </div>
-    <div
-    fxHide.xs
-    fxHide.md
-    fxHide.sm
-    class="search absolute"
+    <nav 
     fxLayout="row"
-    fxLayoutAlign="end">
-      <mat-form-field appearance="legacy">
+    fxLayoutAlign="space-between center">
+
+    <div fxLayoutAlign="center center" fxLayoutGap="20px">
+      <img 
+      fxHide.xs
+      fxHide.sm
+      id="logo" 
+      src="../../../../assets/imgs/logo-fundo-branco.png" 
+      alt="Logo Marca.">
+      <mat-form-field appearance="fill">
         <mat-label>Buscar</mat-label>
-        <input matInput placeholder="Digite a sua busca">
-        <mat-icon matSuffix>search</mat-icon>
+        <input matInput placeholder="Digite a sua busca" (keyup.enter)="findPublicationsByParams()" [formControl]="search">
+        <mat-icon id="icon-search" matSuffix (click)="findPublicationsByParams()">search</mat-icon>
       </mat-form-field>
     </div>
-    </div>
+<div fxLayoutGap="10px" fxLayoutAlign="center center">
+  
+  <a 
+  routerLink="/home"
+  >
+    <mat-icon class="menu-icon">
+       home 
+    </mat-icon>
+  </a>
+  <a 
+  routerLink="/publicar"
+   >
+   <mat-icon class="menu-icon">
+       add_box
+    </mat-icon>
+  </a>
+  <a 
+  id="notificacao"
+  (click)="notifications()"
+   >
+   <mat-icon class="menu-icon" [matBadge]="badge" matBadgeColor="warn" [matBadgeHidden]="badge === 0 ? true : false">
+       notifications 
+    </mat-icon>
+  </a>
+  <a id="perfil" routerLink="/perfil">
+    <participativo-avatar 
+    id="menu-perfil"
+    borderColor="2px solid white" 
+    [src]="usuarioImageUrl + usuario?.avatar | img:'../../../../assets/imgs/no_user_logo.png' | async" 
+    width="40px" height="36px">
+    </participativo-avatar></a>
+  <a 
+  routerLink="/"
+  (click)="sair()">
+  <mat-icon class="menu-icon">
+    exit_to_app 
+    </mat-icon>
+  </a>
+</div>
+</nav>
+  </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
 
   <mat-sidenav-container>
-    <mat-sidenav opened mode="side"
-    fxHide.xs
-    fxHide.md
-    fxHide.sm>
-      <mat-list>
-        <a 
-        *ngFor="let menus of menu"
-        class="menu-list"
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        routerLinkActive="active"
-        routerLink="{{ menus.link }}" 
-        (click)="activeLink = menus.link"
-        mat-list-item>
-          <mat-icon>{{ menus.icon }}</mat-icon>
-          <span> {{ menus.title }} </span>
-        </a>
-      </mat-list>
-    </mat-sidenav>
     <mat-sidenav-content
     id="sidenav"
     fxLayout="row"
     (scroll)="onScroll($event)"
-    fxLayoutAlign="center start"
+    fxLayoutAlign="center center"
     >
     <div class="home-content"
     [ngClass.xs]="'home-content-xs-sm'"

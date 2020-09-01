@@ -9,6 +9,9 @@ import { MaterialModule } from '../../Shared/material/material.module';
 import { NgxModule } from '../../Shared/ngxMask/ngx-mask/ngx-mask.module';
 import { PerfilEditComponent } from './perfil-edit/perfil-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ImgModule } from '../../Shared/pipes/img/img.module';
+import { AvatarModule } from '../../Shared/avatar/avatar.module';
+import { DeleteComponent } from './delete/delete.component';
 
 @NgModule({
   imports: [
@@ -18,9 +21,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     FlexLayoutModule,
     NgxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImgModule,
+    AvatarModule
   ],
-  declarations: [PerfiComponent, PerfilEditComponent],
-  entryComponents: [PerfilEditComponent]
+  declarations: [PerfiComponent, PerfilEditComponent, DeleteComponent],
+  entryComponents: [PerfilEditComponent, DeleteComponent]
 })
 export class PerfiModule { }

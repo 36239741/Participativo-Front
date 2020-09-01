@@ -9,9 +9,10 @@ export interface filter {
 }
 
 export interface IPublicacaoRepository <S, T>{
-     create(params: S): Observable<T>;
-     update(params: S): Observable<T>;
+     create(params: S): T;
+     update(params: S, uuid: S): Observable<T>;
      findAll(params: filter): Observable<PublicacaoTimelineContent>;
+     findByParams(params: S): Observable<T>;
      findOne(params: S): Observable<T>;
      delete(params: S): Observable<T>;
      desapoiar(usuarioUuid:S, params: S): Observable<T>;

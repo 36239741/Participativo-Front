@@ -1,7 +1,7 @@
 export interface Publicacao {
-    uuid: string;
+    uuid?: string;
     descricao: string;
-    logadouro: string;
+    logradouro: string;
     numero: number;
     complemento: string;
     cep: string;

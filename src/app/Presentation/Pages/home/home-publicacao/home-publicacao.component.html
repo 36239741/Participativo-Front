@@ -2,7 +2,24 @@
 fxLayout="column"
 *ngFor="let publicacao of publicacaoContent, let i = index"
 class="publicacao-content">
+
+
+
 <mat-card>
+  <div fxLayoutAlign="center center">
+    <div 
+    [class.mat-elevation-z3]="true"
+    class="tipo-publicacao"
+    [ngClass]="{'elogio': publicacao.categoria.nome === 'Elogio',
+     'reclamacao': publicacao.categoria.nome === 'Reclamação',
+    'sugestao': publicacao.categoria.nome === 'Sugestão'}"
+    fxLayout="row"
+    fxLayoutAlign="center center">
+    <span>
+      <strong> {{ publicacao.categoria.nome }} </strong>
+    </span>
+    </div>
+  </div>
   <div 
   fxLayoutAlign="space-between"
   fxLayout="row"> 
@@ -11,8 +28,13 @@ class="publicacao-content">
     fxLayout="row"
     fxLayoutAlign="start center"
     fxLayoutGap="10px">
-      <img *ngIf="publicacao.usuario.avatar != null" src="" alt="Foto do usuário.">
-      <img *ngIf="publicacao.usuario.avatar == null" src="../../../../../assets/imgs/no_user_logo.png" alt="Foto do usuário.">
+    <participativo-avatar 
+    id="home-avatar"
+    borderColor="2px solid #0288d1" 
+    [src]="usuarioImageUrl + publicacao.usuario?.avatar | img:'../../../../../assets/imgs/no_user_logo.png' | async"
+    alt="Foto do usuário."
+    width="70px" height="70px">
+    </participativo-avatar>
       <section
       fxLayout="column"
       fxLayoutAlign="center start"
@@ -27,42 +49,49 @@ class="publicacao-content">
       </section>
     </header>
   </section>
-    <section>
-      <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
-        <mat-icon>more_vert</mat-icon>
+  <section *ngIf="usuario.uuid === publicacao.usuario.uuid">
+    <button  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="edit(publicacao)">
+        <mat-icon>edit</mat-icon>
+        <span>Editar</span>
       </button>
-    </section>
+      <button mat-menu-item (click)="delete(publicacao.uuid)">
+        <mat-icon>delete</mat-icon>
+        <span>Apagar</span>
+      </button>
+    </mat-menu>
+  </section>
   </div>
 </mat-card>
-<div 
-[class.mat-elevation-z3]="true"
-class="tipo-publicacao"
-[ngClass]="{'elogio': publicacao.categoria.nome === 'Elogio',
- 'reclamacao': publicacao.categoria.nome === 'Reclamação',
-'sugestao': publicacao.categoria.nome === 'Sugestão'}"
-fxLayout="row"
-fxLayoutAlign="center center">
-<span>
-  <strong> {{ publicacao.categoria.nome }} </strong>
-</span>
-</div>
 <div class="img-publicacao">
-    <img src="../../../../../assets/imgs/images.jpeg">
-  <div 
-  [class.mat-elevation-z3]="true"
-  class="local-publicacao"
-  fxLayout="row"
-  fxLayoutAlign="center center">
-  <span>
-    {{ publicacao.endereco.logradouro }} {{ publicacao.endereco.numero }}, {{ publicacao.endereco.bairro.nome }}, {{ publicacao.endereco.bairro.cidade.nome }} - {{ publicacao.endereco.bairro.cidade.estado.nome }}
-  </span>
-  </div>
+    <img 
+    *ngIf="publicacao.image"
+    [attr.src]="(publicacaoImageUrl + publicacao.image | img) | async" 
+    id="img">
 </div>
 
-<mat-card>
-  <span>
+<mat-card fxLayout="column">
+  <span id="descricao">
     {{ publicacao.descricao }}
   </span>
+  <div fxLayoutAlign="center center" *ngIf="publicacao.endereco != null">
+    <a (click)="openMap(publicacao.endereco)">
+      <div 
+      [ngClass]="{'local-content': publicacao.image === null}"
+      [class.mat-elevation-z2]="true"
+      class="local-publicacao"
+      fxLayout="row"
+      fxLayoutAlign="center center">
+      <span>
+        {{ publicacao.endereco.logradouro }} {{ publicacao.endereco.numero }}, {{ publicacao.endereco.bairro.nome }}, {{ publicacao.endereco.complemento }}
+      </span>
+      </div>
+    </a>
+  </div>
+
   <div 
   class="info-publicacao"
   fxLayoutAlign="space-between">
@@ -78,11 +107,12 @@ fxLayoutAlign="center center">
   fxLayoutAlign="space-between">
   <section fxLayout>
     <button mat-button (click)="apoiarOrDesapoiar(publicacao)"> 
-      <mat-icon [ngClass]="{'apoiado': apoio[publicacao.uuid]}">thumb_up</mat-icon>
+      <mat-icon [ngClass]="{'apoiado': apoio[publicacao.uuid]}" id="icon-apoiar">mood</mat-icon>
       {{ apoio[publicacao.uuid] ? 'Apoiado' : 'Apoiar' }}
     </button>
     <button (click)="openSelect(i)" mat-button aria-label="Example icon button with a home icon">
-      <mat-icon>chat_bubble_outline</mat-icon>
+      <mat-icon id="icon-comment">insert_comment
+      </mat-icon>
       Comentar
     </button>
   </section>
@@ -99,17 +129,19 @@ fxLayoutAlign="center center">
   fxLayoutAlign="center center">
     <section
     fxLayout="row"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
     class="status-publicacao">
+    <mat-icon>check_circle</mat-icon>
       <span>
-        Status
+        {{ status.createdAt | dateSeparation }}
       </span>
+      <b>
       <span >
         {{ status.tipo }}
       </span>
+    </b>
     </section>
-    <span>
-      em {{ status.createdAt }}
-    </span>
   </a>
   </div>
   </div>
@@ -121,13 +153,4 @@ fxLayoutAlign="center center">
   (deleteComment)= "deleteComment($event)"
  [comment]="publicacao.comentarios"></participativo-comment>
 </mat-card>
-</div>
-<div *ngIf="last === false && pageEndd === true">
-  <mat-card class="loading" fxLayout="row" fxLayoutGap="10px" *ngFor="let item of items">
-    <div id="img-loading" class="animate"></div>
-    <div id="loading-rows" fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="5px">
-      <section class="animate"></section>
-      <section class="animate"></section>
-    </div>
-  </mat-card>
 </div>

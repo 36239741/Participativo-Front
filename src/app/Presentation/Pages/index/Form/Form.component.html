@@ -14,7 +14,7 @@ class="content">
           Cpf é <strong>obrigatório</strong>
         </mat-error>
         <mat-error *ngIf="form.get('cpf').hasError('cpfValid') && !form.get('cpf').hasError('required')">
-          CPf é <strong>inválido</strong>
+          CPf <strong>inválido</strong>
         </mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -70,7 +70,7 @@ class="content">
           Senha é <strong>obrigatória</strong>
         </mat-error>
       </mat-form-field>
-      <span>Ao clicar em cadastrar, você concorda com os</span><a routerLink="termos-uso" >Termos e Política de dados.</a>
+      <span>Ao clicar em cadastrar, você concorda com os</span><a (click)="save()" (keydown.enter)="save()" routerLink="termos-uso" >Termos e Política de dados.</a>
     </form>
     <section
       class="buttons"
@@ -82,6 +82,7 @@ class="content">
         mat-raised-button 
         color="primary" 
         (click)="register()"
+        (click)="delete()"
         >Cadastrar</button>
         <a routerLink="/" >Já tenho uma conta!</a>
       </section>

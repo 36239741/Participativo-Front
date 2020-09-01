@@ -31,7 +31,7 @@
         <a routerLink="recuperar-senha">Esqueceu sua senha?</a>
       </section>
 
-      <button mat-raised-button color="primary" (click)="login()" id="login">Entrar</button>
+      <button mat-raised-button color="primary" (click)="login()" (keydown.enter)="login()" id="login">Entrar</button>
 
 
     <div 

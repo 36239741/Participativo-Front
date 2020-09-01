@@ -1,27 +1,33 @@
-import { Component, OnInit, Input, AfterViewChecked, AfterContentInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Comentario } from 'src/app/Data/Entity/IPublicacaioTimeLineEntity';
 import { FormControl, Validators } from '@angular/forms';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UsuarioUseCase } from 'src/app/Core/Usecases/UsuarioUseCase';
+import { Unsubscribable } from 'rxjs';
+import { Usuario } from 'src/app/Data/Entity/IUsuarioEntity';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'participativo-comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.css']
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent implements OnInit, OnDestroy {
   @Input() comment: Comentario[] = [];
   @Output() emitComment: EventEmitter<any> = new EventEmitter();
   @Output() editComment: EventEmitter<any> = new EventEmitter();
   @Output() deleteComment: EventEmitter<any> = new EventEmitter();
-
+  usuarioImageUrl = environment.IMG_URL_USER;
   commentInput = new FormControl('');
   show: {[key: number]: boolean} = {};
   jwtHelper = new JwtHelperService();
-
+  unsubscribe: Unsubscribable;
+  usuario:Usuario;
   editCommentControl: FormControl = new FormControl('', Validators.required);
-  constructor() { }
+  constructor(private usuarioUsecase: UsuarioUseCase) { }
+
   ngOnInit() {
-    
+    this.unsubscribe = this.usuarioUsecase.findOne().subscribe(result => { this.usuario = result })
   }
   /* funcao abre o campo da edicao */
   openEdit(index: number, comment: Comentario) {
@@ -54,6 +60,10 @@ export class CommentComponent implements OnInit {
   commentEmit() {
     this.emitComment.emit(this.commentInput.value);
     this.commentInput.reset('');
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.unsubscribe();
   }
 
 }

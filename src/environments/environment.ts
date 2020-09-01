@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://participativo.herokuapp.com/'
+  API_LOGIN: 'https://participativo.com.br/login',
+  API_URL: 'https://participativo.com.br/api/',
+  IMG_URL_USER: 'https://participativo.com.br/api/download/avatar?file=',
+  IMG_URL_PUBLICATION: 'https://participativo.com.br/api/download/image?file='
+
 };
 
 /*

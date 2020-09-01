@@ -1,6 +1,6 @@
 #logo {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 }
 mat-toolbar {
     background-color: white;
@@ -26,6 +26,10 @@ mat-list {
     border-radius: 5px;
     color: #01579b; 
 }
+nav {
+    width: 810px;
+    padding: 16px;
+}
 .menu-list:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
@@ -38,10 +42,8 @@ mat-list {
 }
 .home-content {
     width: 810px;
-    height: calc(100vh - 64px);
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-right: 145px;
+    height: calc(100vh - 74px);
+    margin-top: 50px;
 }
 .home-content-xs-sm {
     width: 100%;
@@ -59,21 +61,35 @@ nav a:hover {
 .logo {
     width: 41%;
 }
-mat-form-field{
-    width: 50%;
-    font-size: 0.9375rem;
-    color: #01579b;
-    width: 200px;
+mat-form-field {
+    font-size: 12px; 
+    height: 42px;
+    color: #0288d1;
+    border-radius: 5px;
+    background-color: white;
+}
+#icon-search{
+    color: #0288d1;
+}
+mat-form-field mat-icon {
+    cursor: pointer;
 }
 #menu {
-    position: relative;
     width: calc(100vw - 16px);
 }
-#logo-search {
-    position: absolute;
-    width: calc(100vw- 16px);
+.menu-icon {
+    color: white;
+    padding: 3px;
+    width: 35.2px;
+    font-size: 2rem;
 }
-.search {
-    position: absolute;
-    margin-left: 80px;
+#perfil {
+    padding: 3px;
+}
+.notificacao {
+    width: 100px;
+    height: 200px;
+}
+.background {
+    background: rgb(0, 0, 0) transparent;
 }

@@ -54,6 +54,7 @@ export interface Endereco {
     bairro: Bairro;
 }
 export interface Bairro {
+    id?: number;
     nome: string;
     cidade: Cidade;
 }

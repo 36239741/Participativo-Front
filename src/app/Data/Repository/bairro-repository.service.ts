@@ -11,7 +11,7 @@ export class BairroRepositoryService {
 
 constructor(private http: HttpClient) { }
 
-  findAll(cidadeId: number): Observable<Bairro> {
-    return this.http.get<Bairro>(environment.API_URL + 'bairros/' + cidadeId);
+  findAll(cidadeId: number): Observable<Bairro[]> {
+    return this.http.get<Bairro[]>(environment.API_URL + 'bairros/' + cidadeId);
   }
 }
