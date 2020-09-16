@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewEncapsulation } from '@angular/core';
 
 import { Menu } from './menu.interface';
 import { Router } from '@angular/router';
@@ -11,12 +11,18 @@ import { Usuario } from 'src/app/Data/Entity/IUsuarioEntity';
 import { FormControl } from '@angular/forms';
 import { FindPublicationBehaviorService } from './find-publication-behavior.service';
 import { environment } from 'src/environments/environment';
+import { PublicacaoUseCase } from 'src/app/Core/Usecases/PublicacaoUseCase';
+import { Publicacao } from 'src/app/Core/Domain/PublicacaoModel';
+import * as moment from 'moment';
 
 
 @Component({
   selector: 'participativo-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
+  encapsulation: ViewEncapsulation.None
+
+  
 })
 export class LayoutComponent implements OnInit {
      menu: Menu[] = [
@@ -37,6 +43,7 @@ export class LayoutComponent implements OnInit {
     private router: Router,
     private behaviorSerach: FindPublicationBehaviorService,
     private usuarioUseCase: UsuarioUseCase,
+    private publicacaoUseCase: PublicacaoUseCase,
     private auth: AuthenticationService,
     private behavior: PageEndService
    ) { 
@@ -57,17 +64,22 @@ export class LayoutComponent implements OnInit {
     this.router.navigate(['home/buscar'], { queryParams: {descricao: search, categorias: '1,2,3'} })
 
   }
-  async notifications() {
-    let btnNotificacao = document.getElementById('notificacao');
-    let coordenadas = btnNotificacao.getBoundingClientRect();
-    let top = coordenadas.top + 64;
-    this.dialog.open(NotificacoesDesktopComponent, {
-      position: {left:  coordenadas.left +'px'  , top: top +'px' },
-      backdropClass: 'background',
-      width: '35vw',
-      height: '85vh',
-      data: this.notificacoes,
-    }).afterClosed().subscribe(() => {this.findNotifications()});
+
+   notifications() {
+      let btnNotificacao = document.getElementById('notificacao');
+      let coordenadas = btnNotificacao.getBoundingClientRect();
+      let top = coordenadas.top + 64;
+        this.dialog.open(NotificacoesDesktopComponent, {
+          position: {left:  coordenadas.left +'px'  , top: top +'px' },
+          backdropClass: 'background',
+          width: '30vw',
+          height: '85vh',
+          data: this.notificacoes,
+        }).afterClosed().subscribe(() => {this.findNotifications()});    
+
+
+    
+
   }
 
   sair() {

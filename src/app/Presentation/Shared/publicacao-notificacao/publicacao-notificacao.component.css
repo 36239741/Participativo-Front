@@ -4,12 +4,17 @@
     height: 50px;
 }
 .notificacao {
+    width: 100%;
     border-radius: 16px;
+}
+.spinner {
+    height: 100%;
 }
 mat-card {
     margin-bottom: 15px;
     padding: 0px;
-    overflow: auto;
+    overflow: hidden;
+    height: 110px;
 }
 #img-publicacao {
     width: 80px;
@@ -30,13 +35,19 @@ mat-card {
 .color span {
     text-transform: capitalize;
 }
+.font-size {
+    font-size: 0.875rem;
+}
 .read {
     background-color: rgba(0, 0, 0, 0.1);
 }
 .notificacao-content {
     padding: 16px;
+    flex: 1;
 }
-a {
+.a {
     text-decoration: none;
     color: black;
+    height: 100%;
+    flex: 1;
 }

@@ -20,8 +20,14 @@
 
 <mat-card fxLayout="column" *ngFor="let publicacao of publicacoesList">
     <a [routerLink]="'/home/ver-publicacao/' + publicacao.uuid">
-    <section fxLayoutAlign="start">
-        <img id="user-img" [attr.src]="usuarioImageUrl + publicacao.usuario.avatar | img:'../../../../../assets/imgs/no_user_logo.png' | async" alt="Foto do usuario">
+    <section fxLayoutAlign="start" fxLayoutGap="10px">
+        <participativo-avatar 
+        id="home-avatar"
+        borderColor="2px solid #0288d1" 
+        [src]="usuarioImageUrl + publicacao.usuario?.avatar | img:'../../../../../assets/imgs/no_user_logo.png' | async"
+        alt="Foto do usuário."
+        width="70px" height="70px">
+        </participativo-avatar>
            <p id="name-user">{{ publicacao?.usuario?.nome }}
            {{ publicacao?.usuario?.sobrenome }}</p>
     </section>
@@ -29,7 +35,7 @@
         <mat-divider></mat-divider>
     </div>
     <div 
-    fxLayoutAlign="start"
+    fxLayoutAlign="space-between center"
     fxLayout="row">
         <span id="descricao-publicacao">
             <span id="data-publicacao">
@@ -43,12 +49,15 @@
     </div>
 <div id="info-content" fxLayout="column" fxLayoutAlign="end">
     <div fxLayoutAlign="space-between center" id="info">
-            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
-                <mat-icon>thumb_up</mat-icon>
-                <p>{{ publicacao.totalApoios }}</p>
-            </div>
-            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center">
-                <p>{{ publicacao.totalComentarios }} Comentários</p>
+            <div fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="center center">
+                <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+                    <p>{{ publicacao.totalApoios }}</p>
+                    <mat-icon>mood</mat-icon>
+                </div>
+                <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+                    <p>{{ publicacao.totalComentarios }} </p><mat-icon id="icon-comment">insert_comment</mat-icon>
+                </div>
+
             </div>
     </div>
 </div>

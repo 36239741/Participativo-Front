@@ -14,11 +14,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { MapComponent } from 'src/app/Presentation/Shared/map/map.component';
 import * as moment from 'moment';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { DeleteComponent } from 'src/app/Presentation/Shared/delete/delete.component';
+
 
 @Component({
   selector: 'participativo-home-publicacao',
   templateUrl: './home-publicacao.component.html',
-  styleUrls: ['./home-publicacao.component.css']
+  styleUrls: ['./home-publicacao.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [   // :enter is alias to 'void => *'
+        style({opacity:0}),
+        animate(150, style({opacity:1})) 
+      ]),
+      transition(':leave', [   // :leave is alias to '* => void'
+        animate(150, style({opacity:0})) 
+      ])
+    ])
+  ]
 })
 export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -29,6 +43,7 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
   unsubscribe: Unsubscribable[] = [];
   show: {[key: string]: boolean} = {};
   apoio: {[key: number]: boolean} = {};
+  showApoiador: {[key: number]: boolean} = {};
   imgError: {[key: number]: boolean} = {};
   comment: string;
   usuario: Usuario;
@@ -62,6 +77,9 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
   showAndHidden(index) {
     this.show[index] ? this.show[index] = false : this.show[index] = true
   }
+  showApoiadores(index) {
+    this.showApoiador[index] ? this.showApoiador[index] = false : this.showApoiador[index] = true
+  }
   edit(publicacao: any) {
     this.dialogRef.open(PublicacaoEditComponent, {
       width: '35vw',
@@ -71,9 +89,14 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
     }).afterClosed().subscribe(() => {this.refreshPage()})
   }
   async delete(uuid: string) {
-    await this.publicacaoUseCase.delete(uuid).toPromise();
-    this.refreshPage();
+    this.dialogRef.open(DeleteComponent, {
+      width: '35vw',
+      height: '25vh',
+      data: {option: 'deletePublicacao', message: 'Tem certeza que deseja exluir a publicação?', uuid: uuid},
+      disableClose: true
+    }).afterClosed().subscribe(() => {this.refreshPage()})
   }
+  
   openMap(endereco) {
     this.dialogRef.open(MapComponent, {
       data: endereco,

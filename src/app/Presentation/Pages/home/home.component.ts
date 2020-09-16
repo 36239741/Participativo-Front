@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PublicacaoTimelineContent, PublicacaoTimeline } from 'src/app/Data/Entity/IPublicacaioTimeLineEntity';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageEndService } from '../../Base/layout/page-end.service';
 import { PublicacaoUseCase } from 'src/app/Core/Usecases/PublicacaoUseCase';
 import { isArray } from 'util';
@@ -17,23 +17,29 @@ export class HomeComponent implements OnInit {
   pageEndd: boolean = false;
   last: boolean = false;
   pageNumber: number;
+  url: string;
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private publicacaoUseCase: PublicacaoUseCase,
               private behavior: PageEndService) { 
-    this.route.data.subscribe(() => {
+
+  }
+
+   ngOnInit() {
+    this.route.data.subscribe(async () => {
       if(isArray(this.route.snapshot.data.data.content)) {
         this.publicacaoTimeLine = this.route.snapshot.data.data;
       }else {
+        this.content = []
+        this.url = this.route.snapshot.params.uuid;
         this.content.push(this.route.snapshot.data.data);
         this.publicacaoTimeLine.content = this.content;
       }
     });
-  }
-
-  ngOnInit() {
     this.last = this.publicacaoTimeLine['last'];
     this.pageEnd();
   }
+
 
   /* Funcao verifica se esta no fim da pagina e nao e a ultima pagina do pageable e faz um nova requisicao para pagina seguinte */
   pageEnd() {

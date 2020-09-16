@@ -6,6 +6,7 @@ import { NotificacoesService } from 'src/app/Data/Repository/notificacoes.servic
 import { HttpParams } from '@angular/common/http';
 import { UsuarioUseCase } from 'src/app/Core/Usecases/UsuarioUseCase';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'participativo-publicacao-notificacao',
@@ -14,47 +15,49 @@ import * as moment from 'moment';
 })
 export class PublicacaoNotificacaoComponent implements OnInit {
   publicacoes: any[] = [];
+  spinner: boolean = false
   publicacaoImageUrl = environment.IMG_URL_PUBLICATION;
   usuarioImageUrl = environment.IMG_URL_USER;
   constructor(private notificacoes: NotificacoesService,
+              private router: Router,
               private publicacaoUseCase: PublicacaoUseCase,
-              private usuarioUseCase: UsuarioUseCase,
               private matDialog: MatDialog,
-              @Inject(MAT_DIALOG_DATA) public data: any[]) { }
+              @Inject(MAT_DIALOG_DATA) public data: any[]) { 
+                
+                if(this.data.length > 0) {
+                  this.data.sort((a, b) => {
+                    let dateA = moment(a.createdAt, 'DD-MM-YYYY H:m');
+                    let dateB = moment(b.createdAt, 'DD-MM-YYYY H:m');
+                    if (dateA.isAfter(dateB)) return -1;
+                    if (dateB.isAfter(dateA)) return 1;
+                    return 0
+                  })
+                  this.findNotificationsPublicacao()
+                }
+              }
 
    ngOnInit() {
-    if(this.data.length > 0) {
-      this.findPublications();
-    }
-    this.data.sort((a, b) => {
-      let dateA = moment(a.createdAt, 'DD-MM-YYYY H:m');
-      let dateB = moment(b.createdAt, 'DD-MM-YYYY H:m');
-      if (dateA.isAfter(dateB)) return -1;
-      if (dateB.isAfter(dateA)) return 1;
-      return 0
-    })
   }
-
-  async readNotifications(uuid: string, readAt: string) {
+  findNotificationsPublicacao() {
+    this.spinner = true
+    let promise = this.data.map(result => {
+      let publicacaoSearch = this.publicacaoUseCase.findOne(result.publicacao).toPromise()
+      return publicacaoSearch
+    })
+    Promise.all(promise).then(result => 
+      {this.publicacoes = result
+        this.spinner = false
+      })
+  }
+  async readNotifications(uuid: string, readAt: string, publicacaoUuid: string) {
+    this.router.navigate(['/home/ver-publicacao/' + publicacaoUuid])
     if(readAt === null) {
     let httpParams: HttpParams = new HttpParams();
     httpParams = httpParams.set('uuid', uuid);
     await this.notificacoes.readNotifications(httpParams).toPromise();
-    let usuario = await this.usuarioUseCase.findOne().toPromise();
-    let notificacoes = await this.usuarioUseCase.notificacoes(usuario.uuid).toPromise();
-    this.data = [];
-    this.publicacoes = [];
-    this.data = notificacoes;
     this.matDialog.closeAll();
-    this.findPublications();
   }else {
     this.matDialog.closeAll();
   }
-  }
-
-  findPublications() {
-    this.data.map(result => {
-      this.publicacaoUseCase.findOne(result.publicacao).subscribe(publicacao => {this.publicacoes.push(publicacao)})
-    })
   }
 }

@@ -74,17 +74,23 @@ class="content">
     </form>
     <section
       class="buttons"
-      fxLayout="row"
+      fxLayout="column"
       fxLayoutAlign="center center"
-      fxLayoutGap="20px"
+      fxLayoutGap="10px"
       >
-        <button 
-        mat-raised-button 
-        color="primary" 
-        (click)="register()"
-        (click)="delete()"
-        >Cadastrar</button>
+        <div 
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        fxLayoutGap="10px">
+            <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="register()"
+            (click)="delete()"
+            >Cadastrar</button>
+            <mat-spinner diameter="35" *ngIf="spinner"></mat-spinner>
+        </div>
+       <p>ou</p>
         <a routerLink="/" >Já tenho uma conta!</a>
       </section>
-
 </div>

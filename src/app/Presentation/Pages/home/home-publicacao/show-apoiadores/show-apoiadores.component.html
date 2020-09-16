@@ -1,0 +1,7 @@
+<div class="show-apoiadores" id="content" fxLayout="column">
+  <div id="title">
+    <b><span>Apoiadores</span></b>
+  </div>
+  <span *ngFor="let apoiador of dezenoveApoiadores, let i = index">{{ apoiador.usuario.nome }} {{ apoiador.usuario.sobrenome }}</span>
+  <span *ngIf="apoiadores.length > 19">e mais {{apoiadores.length - 19}}</span>
+</div>

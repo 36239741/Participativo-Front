@@ -11,7 +11,8 @@ import { PerfilEditComponent } from './perfil-edit/perfil-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImgModule } from '../../Shared/pipes/img/img.module';
 import { AvatarModule } from '../../Shared/avatar/avatar.module';
-import { DeleteComponent } from './delete/delete.component';
+import { DeleteModule } from '../../Shared/delete/delete.module';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 @NgModule({
   imports: [
@@ -23,9 +24,10 @@ import { DeleteComponent } from './delete/delete.component';
     NgxModule,
     ReactiveFormsModule,
     ImgModule,
-    AvatarModule
+    AvatarModule,
+    DeleteModule
   ],
-  declarations: [PerfiComponent, PerfilEditComponent, DeleteComponent],
-  entryComponents: [PerfilEditComponent, DeleteComponent]
+  declarations: [PerfiComponent, PerfilEditComponent, UpdatePasswordComponent],
+  entryComponents: [PerfilEditComponent, UpdatePasswordComponent]
 })
 export class PerfiModule { }

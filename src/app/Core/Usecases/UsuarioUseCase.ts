@@ -18,6 +18,9 @@ export class UsuarioUseCase implements IUsuarioUserCase<Usuario, any> {
                 private router: Router) {
 
     }
+    updatePassword(newPassowd: any) {
+        return this.UsuarioRepository.updatePassword(newPassowd);
+    }
     delete(uuid: any) {
         return this.UsuarioRepository.delete(uuid);
     }
@@ -37,8 +40,8 @@ export class UsuarioUseCase implements IUsuarioUserCase<Usuario, any> {
         }
         return this.UsuarioRepository.findOne(param);
     }
-    sendNewPassword(password: any) {
-        return this.UsuarioRepository.sendNewPassowrd(password);
+    sendNewPassword(password: any, token: string) {
+        return this.UsuarioRepository.sendNewPassowrd(password, token);
     }
     create(params: Usuario): UsuarioModel {
         params.tipo = 1;

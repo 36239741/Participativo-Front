@@ -21,7 +21,7 @@
     margin-bottom: 5px;
 }
 .comment-area {
-    margin-top: 10px;
+    margin-top: 30px;
 }
 mat-form-field {
     width: 100%;
@@ -29,4 +29,8 @@ mat-form-field {
 .iconCommentInput{
     cursor: pointer;
     color: #01579b;
+}
+.divider {
+    margin-top: 20px;
+    margin-bottom: 30px;
 }

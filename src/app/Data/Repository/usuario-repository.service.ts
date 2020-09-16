@@ -12,13 +12,14 @@ import { UsuarioUpdateEntity } from '../Entity/IUsuarioUpdateEntity';
 })
 export class UsuarioRepositoryService implements IUsuarioRepository<Usuario, Usuario>{
   
-
-
 constructor(
   private http: HttpClient,
 ) { }
+  updatePassword(params: any): Observable<Usuario> {
+    return this.http.post<any>(environment.API_URL + 'auth/trocarsenha', {senha: params});
+  }
   delete(uuid: any): Observable<Usuario> {
-    return this.http.delete<any>(environment.API_URL + 'deleteLogico/' + uuid);
+    return this.http.put<any>(environment.API_URL + 'usuarios/deleteLogico/' + uuid, {});
   }
   findOneByUuid(uuid: any): Observable<Usuario> {
     return this.http.get<Usuario>(environment.API_URL + 'usuarios/' + uuid);
@@ -30,11 +31,9 @@ constructor(
     return this.http.get(environment.API_URL + 'usuarios/validate/' + params + '/' + email);
 
   }
-  sendNewPassowrd(password: any): Observable<any> {
-    return this.http.post(environment.API_URL + 'auth/redefinirsenha', 
-    { senha: password, token: localStorage.getItem('token')  });
+  sendNewPassowrd(password: any, token: string): Observable<any> {
+    return this.http.post(environment.API_URL + 'auth/redefinirsenha', { senha: password, token: token  });
   }
-
   findOne(param: any): Observable<Usuario> {
     return this.http.get<Usuario>(environment.API_URL + 'usuarios/email', {params: param});
   }

@@ -1,4 +1,5 @@
 <div 
+id="publicacao"
 fxLayout="column"
 *ngFor="let publicacao of publicacaoContent, let i = index"
 class="publicacao-content">
@@ -16,7 +17,7 @@ class="publicacao-content">
     fxLayout="row"
     fxLayoutAlign="center center">
     <span>
-      <strong> {{ publicacao.categoria.nome }} </strong>
+       {{ publicacao.categoria.nome }} 
     </span>
     </div>
   </div>
@@ -81,12 +82,12 @@ class="publicacao-content">
     <a (click)="openMap(publicacao.endereco)">
       <div 
       [ngClass]="{'local-content': publicacao.image === null}"
-      [class.mat-elevation-z2]="true"
+      [class.mat-elevation-z3]="true"
       class="local-publicacao"
       fxLayout="row"
       fxLayoutAlign="center center">
       <span>
-        {{ publicacao.endereco.logradouro }} {{ publicacao.endereco.numero }}, {{ publicacao.endereco.bairro.nome }}, {{ publicacao.endereco.complemento }}
+        {{ publicacao.endereco.logradouro }} {{ publicacao.endereco.numero }} - {{ publicacao.endereco.bairro.nome }} {{ publicacao.endereco.complemento }}
       </span>
       </div>
     </a>
@@ -95,15 +96,24 @@ class="publicacao-content">
   <div 
   class="info-publicacao"
   fxLayoutAlign="space-between">
-    <span>
-      <strong>{{ publicacao.totalApoios }}</strong> pessoas apoiam essa publicação
-    </span>
-    <span>
+    <a id="apoiadores" (mouseover)="showApoiadores(i)" (mouseout)="showApoiadores(i)">
+        <span *ngIf="publicacao.totalApoios > 0" >
+          <strong>{{ publicacao.totalApoios }}</strong> pessoas apoiam essa publicação
+        </span>
+    </a>
+      <div fxLayoutAlign="start" class="show-apoiadores" *ngIf="showApoiador[i] " [@fadeInOut]>
+          <app-show-apoiadores [apoiadores]="publicacao.apoios"></app-show-apoiadores>
+      </div>
+   
+
+    <span *ngIf="publicacao.totalComentarios > 0">
       <a (click)="openSelect(i)"><strong>{{ publicacao.totalComentarios }} </strong> Comentários</a>
     </span>
   </div>
-  <mat-divider></mat-divider>
+  <mat-divider [inset]="true"></mat-divider>
+
   <div 
+  class="actions"
   fxLayoutAlign="space-between">
   <section fxLayout>
     <button mat-button (click)="apoiarOrDesapoiar(publicacao)"> 
@@ -130,7 +140,7 @@ class="publicacao-content">
     <section
     fxLayout="row"
     fxLayoutAlign="center center"
-    fxLayoutGap="10px"
+    fxLayoutGap="20px"
     class="status-publicacao">
     <mat-icon>check_circle</mat-icon>
       <span>

@@ -4,7 +4,8 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { UsuarioUseCase } from 'src/app/Core/Usecases/UsuarioUseCase';
 import { SnackbarService } from 'src/app/Presentation/Shared/snackbar/snackbar.service';
 import { Unsubscribable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -23,9 +24,13 @@ export class ForgotPasswordFormComponent implements OnInit {
   hide2 = true;
   form: FormGroup;
   unsubscribable: Unsubscribable;
+  jwtHelper = new JwtHelperService();
+  spinner: boolean = false;
+  buttonDisable: boolean = false
   constructor(private formBuilder: FormBuilder,
               private snackBar: SnackbarService,
               private router: Router,
+              private actRoute: ActivatedRoute,
               private usuarioUseCase: UsuarioUseCase) {
 
    }
@@ -44,9 +49,12 @@ export class ForgotPasswordFormComponent implements OnInit {
   }
   
   /* Funcao envia a nova senha se o formulario estiver valido */
-  sendNewPassword() {
+ async  sendNewPassword() {
+    let token = await this.actRoute.snapshot.params.token;
     if(this.form.valid) {
-      this.unsubscribable = this.usuarioUseCase.sendNewPassword(this.form.get('novaSenha').value)
+      this.spinner = true;
+      this.buttonDisable = true;
+      this.unsubscribable = this.usuarioUseCase.sendNewPassword(this.form.get('novaSenha').value, token)
         .subscribe(() => {
           this.snackBar.open({ message: 'Senha alterada com sucesso!', duration: 5, customClass: 'success' })
           this.router.navigate(['/'])
@@ -55,6 +63,7 @@ export class ForgotPasswordFormComponent implements OnInit {
           this.snackBar.open({ message: err.error.message, duration: 5, customClass: 'error' })
         },
         () => {
+          this.spinner = false
           this.unsubscribable.unsubscribe();
         })
     }

@@ -40,6 +40,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class FormComponent implements OnInit {
   hide = true;
   form: FormGroup; 
+  spinner: boolean = false;
   constructor(private formBuilder: FormBuilder,
               private snackBar: SnackbarService,
               private saveForm: SaveFormService,
@@ -57,7 +58,10 @@ export class FormComponent implements OnInit {
   register() {
     let usuario = this.valuesForm();
     if(this.validateForm()) {
-      this.usuarioUserCase.create(usuario);
+      this.spinner = true;
+      if(this.usuarioUserCase.create(usuario)) {
+        this.spinner = false;
+      }
     }
   }
   save() {

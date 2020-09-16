@@ -9,7 +9,8 @@ import { UsuarioUseCase } from 'src/app/Core/Usecases/UsuarioUseCase';
 import { SnackbarService } from '../../Shared/snackbar/snackbar.service';
 import { ImgRepositoryService, EType } from 'src/app/Data/Repository/img-repository.service';
 import { environment } from 'src/environments/environment';
-import { DeleteComponent } from './delete/delete.component';
+import { DeleteComponent } from '../../Shared/delete/delete.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 @Component({
   selector: 'participativo-perfi',
@@ -37,10 +38,17 @@ export class PerfiComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
   }
+  updatePassword() {
+    this.dialog.open(UpdatePasswordComponent, {
+      width: '40vw',
+      disableClose: true,
+    })
+  }
   openDelete() {
     this.dialog.open(DeleteComponent, {
       width: '40vw',
-      disableClose: true
+      disableClose: true,
+      data: {option: 'deletePerfil', message: 'Tem certeza que deseja exluir o seu perfil?'}
     })
   }
   /* Funcao abre a caixa de dialog passando o compenent de edicao  */

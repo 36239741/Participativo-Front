@@ -8,20 +8,20 @@
     fxLayout="row"
     fxLayoutAlign="space-between center">
 
-    <div fxLayoutAlign="center center" fxLayoutGap="20px">
+    <div fxLayoutAlign="center center" fxLayoutGap="10px">
       <img 
       fxHide.xs
       fxHide.sm
       id="logo" 
       src="../../../../assets/imgs/logo-fundo-branco.png" 
       alt="Logo Marca.">
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" class="search">
         <mat-label>Buscar</mat-label>
-        <input matInput placeholder="Digite a sua busca" (keyup.enter)="findPublicationsByParams()" [formControl]="search">
+        <input matInput (keyup.enter)="findPublicationsByParams()" [formControl]="search">
         <mat-icon id="icon-search" matSuffix (click)="findPublicationsByParams()">search</mat-icon>
       </mat-form-field>
     </div>
-<div fxLayoutGap="10px" fxLayoutAlign="center center">
+<div fxLayoutGap="10px" fxLayoutAlign="center center" class="menu-icons">
   
   <a 
   routerLink="/home"
@@ -50,7 +50,7 @@
     id="menu-perfil"
     borderColor="2px solid white" 
     [src]="usuarioImageUrl + usuario?.avatar | img:'../../../../assets/imgs/no_user_logo.png' | async" 
-    width="40px" height="36px">
+    width="40px" height="40px">
     </participativo-avatar></a>
   <a 
   routerLink="/"

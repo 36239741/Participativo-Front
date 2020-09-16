@@ -20,6 +20,8 @@ import { PublicationFindComponent } from './publication-find/publication-find.co
 import { MapModule } from '../../Shared/map/map.module';
 import { MapComponent } from '../../Shared/map/map.component';
 import { AvatarModule } from '../../Shared/avatar/avatar.module';
+import { ShowApoiadoresComponent } from './home-publicacao/show-apoiadores/show-apoiadores.component';
+import { DeleteModule } from '../../Shared/delete/delete.module';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { AvatarModule } from '../../Shared/avatar/avatar.module';
     StatusHistoryComponent,
     CommentComponent,
     PublicacaoEditComponent,
-    PublicationFindComponent
+    PublicationFindComponent,
+    ShowApoiadoresComponent
   ],
   imports: [
     CommonModule,
@@ -44,12 +47,14 @@ import { AvatarModule } from '../../Shared/avatar/avatar.module';
     ImgModule,
     OrderArrayModule,
     MapModule,
-    AvatarModule
+    AvatarModule,
+    DeleteModule
   ],
   entryComponents: [
     StatusHistoryComponent,
     PublicacaoEditComponent,
-    MapComponent
+    MapComponent,
+    ShowApoiadoresComponent
   ]
 })
 export class HomeModule { }

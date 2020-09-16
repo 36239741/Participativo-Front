@@ -1,6 +1,10 @@
+<div
+fxLayout="row"
+fxLayoutAlign="center center">
+    <participativo-home-publicacao 
+    (lastPage)="lastPage($event)"
+    (timeLineContent)="publicacaoTimeLineContent($event)"
+    [publicacaoTimeLine]="publicacaoTimeLine"></participativo-home-publicacao>
+</div>
 
-<participativo-home-publicacao 
-(lastPage)="lastPage($event)"
-(timeLineContent)="publicacaoTimeLineContent($event)"
-[publicacaoTimeLine]="publicacaoTimeLine"></participativo-home-publicacao>
 

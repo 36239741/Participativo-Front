@@ -2,11 +2,6 @@ mat-card {
     height: 270px;
     margin-bottom: 20px;
 }
-#user-img {
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-}
 #publicacao-img {
     width: 80px;
     height: 80px;
@@ -17,7 +12,9 @@ mat-card {
     margin-top: 15px;
 }
 #name-user {
-    margin-top: 10px;
+    margin-top: 15px;
+    color: #0288d1;
+    text-transform: capitalize;
 }
 #data-publicacao {
     color: rgb(0, 0, 0, 0.6);
@@ -39,7 +36,10 @@ mat-card {
     height: 60px;
 }
 mat-icon {
-    color: #01579b;
+    color: #0288d1;
+}
+#comentarios {
+    color: #0288d1;
 }
 .categoria {
     height: 150px;

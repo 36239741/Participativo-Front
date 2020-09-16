@@ -28,6 +28,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   forgotPasswordInput = new FormControl('', [Validators.required, Validators.email]);
   unsubscribable: Unsubscribable;
+  spinner: boolean = false;
 
   ngOnInit() {
     
@@ -36,14 +37,18 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   abre uma modal com a mensagem do error */
   forgotPassword () {
     if(this.forgotPasswordInput.valid) {
+      this.spinner = true;
      this.unsubscribable =  this.usuarioUseCase.redefinePassword(this.forgotPasswordInput.value)
         .subscribe(() => {
-          this.router.navigate(['/redefinir-senha']);
+          this.forgotPasswordInput.reset();
+          this.router.navigate(['/'])
+          this.snackBar.open({ message: 'Siga as instruções do email enviado para redefinir a senha', duration: 5, customClass: 'success' })
         },
          err => {
           this.snackBar.open({ message: err.error.message, duration: 5, customClass: 'error' });
          },
          () => {
+          this.spinner = false
           this.unsubscribable.unsubscribe();
          })
     }

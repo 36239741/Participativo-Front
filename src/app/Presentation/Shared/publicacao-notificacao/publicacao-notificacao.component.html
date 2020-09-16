@@ -1,33 +1,41 @@
+<div
+*ngIf='spinner'
+class="spinner"
+fxLayout="row"
+fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</div>
+
+
 <mat-card
 *ngFor="let publicacao of publicacoes; let i = index"
 >
   <div
-    
+  fxLayout="row"
+  fxLayoutAlign="start center"
    class="notificacao">
-   <a [routerLink]="'/home/ver-publicacao/' + publicacao.uuid" (click)="readNotifications(data[i].uuid, data[i].readAt)">
+   <a class="a"  [ngClass]="{'read':  data[i].readAt === null}" (click)="readNotifications( data[i].uuid,  data[i].readAt, publicacao.uuid)">
     <div
     class="notificacao-content"
     fxLayout="row"
     fxLayoutAlign="space-between center"
     fxLayoutGap="5px"
-    [ngClass]="{'read': data[i].readAt === null}"
     >
-    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="40px">
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
       <section fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center start"> 
         <img id="user-img" [attr.src]="usuarioImageUrl + data[i].gerador.avatar | img:'../../../../../assets/imgs/no_user_logo.png' | async" alt="Foto do usuario">
     </section>
      <section fxLayout="column" fxLayoutGap="5px">
       <p class="color">
-        <span>{{ data[i].gerador.nome }} </span> <strong class="toUppeCase">{{ data[i].tipo | notificationsType  }}</strong> sua publicação
+        <span>{{  data[i].tipo != 'STATUS' ?  data[i].gerador.nome : 'Foi alterado o' }} </span> <strong class="toUppeCase">{{  data[i].tipo | notificationsType  }}</strong> {{  data[i].tipo != 'STATUS' ? 'sua publicação' : 'da sua publicação' }}
       </p>
       <section fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
-        <mat-icon class="color">watch_later</mat-icon><p class="color"> em {{ data[i].createdAt }}</p>
+        <mat-icon class="color">watch_later</mat-icon><p class="color font-size"> em {{  data[i].createdAt }}</p>
       </section>
      </section>
     </div>
-
        <img id="img-publicacao" 
-       [attr.src]="publicacaoImageUrl + publicacao.image  | img | async" 
+       [attr.src]="(publicacaoImageUrl + publicacao?.image | img) | async"  
        />
       </div>
     </a>

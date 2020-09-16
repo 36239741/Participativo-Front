@@ -1,0 +1,14 @@
+.show-apoiadores {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.show-apoiadores #title {
+    margin-bottom: 10px;
+}
+.show-apoiadores span {
+    font-size: 0.9rem;
+    text-transform: capitalize;
+}

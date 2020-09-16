@@ -19,8 +19,8 @@ children: [
   { path: 'registrar', component: FormComponent, data: { animation : 'registrar' }, },
   { path: 'sucesso/:method', component: SuccessComponent, },
   { path: 'registrar/termos-uso', component: RulesComponent, data: { animation: 'rules'}, },
-  { path: 'redefinir-senha', component: ForgotPasswordFormComponent },
-  { path: 'usuarios/validate/:token/:email', component: ValidateUserComponent, canActivate: [TokenGuardService] },
+  { path: 'redefinir-senha/:token', component: ForgotPasswordFormComponent },
+  { path: 'validate/:token/:email', component: ValidateUserComponent, canActivate: [TokenGuardService] },
 ]}
 ];
 
