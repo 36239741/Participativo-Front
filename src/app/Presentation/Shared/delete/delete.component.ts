@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/Data/Entity/IUsuarioEntity';
 import { SnackbarService } from 'src/app/Presentation/Shared/snackbar/snackbar.service';
 import { Router } from '@angular/router';
 import { PublicacaoUseCase } from 'src/app/Core/Usecases/PublicacaoUseCase';
+import { AuthenticationService } from 'src/app/Infra/Authentication/authentication.service';
 
 @Component({
   selector: 'app-delete',
@@ -17,6 +18,7 @@ export class DeleteComponent implements OnInit {
               private router: Router,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private snackBar: SnackbarService,
+              private auth: AuthenticationService,
               private usuarioUseCase: UsuarioUseCase,
               private publicacaoUseCase: PublicacaoUseCase) { }
 
@@ -45,7 +47,11 @@ export class DeleteComponent implements OnInit {
   async delete() {
     let usuario:Usuario = await this.usuarioUseCase.findOne().toPromise();
     await this.usuarioUseCase.delete(usuario.uuid).toPromise();
-    this.router.navigate(['/'])
-    this.snackBar.open({message: 'Perfil deletado com sucesso!', duration: 5, customClass: 'success'})
+    this.auth.logout().subscribe(result => {
+      this.dialog.closeAll();
+      localStorage.removeItem('token');
+      this.router.navigate(['/'])
+      this.snackBar.open({message: 'Perfil deletado com sucesso!', duration: 5, customClass: 'success'})
+    })
   }
 }

@@ -34,7 +34,9 @@ fxLayoutAlign="center center">
       </section>
      </section>
     </div>
-       <img id="img-publicacao" 
+       <img 
+       *ngIf='publicacao.image'
+       id="img-publicacao" 
        [attr.src]="(publicacaoImageUrl + publicacao?.image | img) | async"  
        />
       </div>

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy, Output, 
 import { PublicacaoTimelineContent, PublicacaoTimeline, Comentario } from 'src/app/Data/Entity/IPublicacaioTimeLineEntity';
 import { PublicacaoUseCase } from 'src/app/Core/Usecases/PublicacaoUseCase';
 import { SnackbarService } from 'src/app/Presentation/Shared/snackbar/snackbar.service';
-import { Unsubscribable } from 'rxjs';
+import { BehaviorSubject, Unsubscribable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { StatusHistoryComponent } from './status-history/status-history.component';
 import { UsuarioUseCase } from 'src/app/Core/Usecases/UsuarioUseCase';
@@ -36,9 +36,10 @@ import { DeleteComponent } from 'src/app/Presentation/Shared/delete/delete.compo
 })
 export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() publicacaoTimeLine: PublicacaoTimelineContent;
+  @Input() behavior: BehaviorSubject<any>;
   @Output() lastPage: EventEmitter<any> = new EventEmitter();
   @Output() timeLineContent: EventEmitter<any> = new EventEmitter();
+  publicacaoTimeLine: PublicacaoTimelineContent;
   publicacaoContent: any[] = [];
   unsubscribe: Unsubscribable[] = [];
   show: {[key: string]: boolean} = {};
@@ -61,7 +62,7 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
   }
   ngOnInit() {
-    this.publicacaoContent = this.publicacaoTimeLine.content;
+    this.behavior.subscribe(result => {this.publicacaoContent = result.content})
     this.publicacaoContent.sort((a, b) => {
       let dateA = moment(a.createdAt, 'DD-MM-YYYY H:m');
       let dateB = moment(b.createdAt, 'DD-MM-YYYY H:m');
@@ -90,8 +91,8 @@ export class HomePublicacaoComponent implements OnInit, OnChanges, OnDestroy {
   }
   async delete(uuid: string) {
     this.dialogRef.open(DeleteComponent, {
-      width: '35vw',
-      height: '25vh',
+      width: '600px',
+      height: '240px',
       data: {option: 'deletePublicacao', message: 'Tem certeza que deseja exluir a publicação?', uuid: uuid},
       disableClose: true
     }).afterClosed().subscribe(() => {this.refreshPage()})

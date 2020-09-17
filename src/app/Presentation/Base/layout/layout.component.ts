@@ -83,8 +83,10 @@ export class LayoutComponent implements OnInit {
   }
 
   sair() {
-    this.auth.logout();
-    this.router.navigate(['/'])
+    this.auth.logout().subscribe(result => {
+      localStorage.removeItem('token');
+      this.router.navigate(['/'])
+    })
   }
 
   @HostListener('window:scroll', ['$event']) // for window scroll events

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PageEndService } from '../../Base/layout/page-end.service';
 import { PublicacaoUseCase } from 'src/app/Core/Usecases/PublicacaoUseCase';
 import { isArray } from 'util';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'participativo-home',
@@ -11,13 +12,13 @@ import { isArray } from 'util';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  behaviorSubject: BehaviorSubject<any> = new BehaviorSubject(null);
   publicacaoTimeLine: PublicacaoTimelineContent = 
     {content: [], number: 0, size: 0, totalElements: 0, totalPages: 0 };
   content: PublicacaoTimeline[] = []
   pageEndd: boolean = false;
   last: boolean = false;
   pageNumber: number;
-  url: string;
   constructor(private route: ActivatedRoute,
               private router: Router,
               private publicacaoUseCase: PublicacaoUseCase,
@@ -29,11 +30,12 @@ export class HomeComponent implements OnInit {
     this.route.data.subscribe(async () => {
       if(isArray(this.route.snapshot.data.data.content)) {
         this.publicacaoTimeLine = this.route.snapshot.data.data;
+        this.behaviorSubject.next(this.publicacaoTimeLine)
       }else {
         this.content = []
-        this.url = this.route.snapshot.params.uuid;
         this.content.push(this.route.snapshot.data.data);
         this.publicacaoTimeLine.content = this.content;
+        this.behaviorSubject.next(this.publicacaoTimeLine)
       }
     });
     this.last = this.publicacaoTimeLine['last'];

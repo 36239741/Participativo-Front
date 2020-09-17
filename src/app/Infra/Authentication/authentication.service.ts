@@ -24,7 +24,7 @@ constructor(private http: HttpClient) { }
   }
 
   logout() {
-    localStorage.removeItem('token');
+    return this.http.get(environment.API_URL + 'dologout')
   }  
 
   isLogged() {

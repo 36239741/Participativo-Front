@@ -6,7 +6,7 @@ div header {
 .dialog-content {
     padding: 16px;
     color: green;
-    border-bottom: 2px solid #01579b;
+    border-top: 2px solid #01579b;
 }
 .dialog-content div {
     color:#01579b
