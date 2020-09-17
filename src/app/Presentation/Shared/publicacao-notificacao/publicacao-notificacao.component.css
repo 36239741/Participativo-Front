@@ -51,3 +51,60 @@ mat-card {
     height: 100%;
     flex: 1;
 }
+@media(min-width: 1750px) {
+    span {
+        font-size: 1rem;
+    }
+    .toUppeCase {
+        font-size: 1rem;
+    }
+    #img-publicacao {
+        width: 80px;
+        height: 80px;
+    }
+    #user-img {
+        width: 80px;
+        height: 80px;
+    }
+    mat-card {
+        height: 110px;
+    }
+}
+@media(max-width: 1740px) {
+    span {
+        font-size: 0.75rem;
+    }
+    .toUppeCase {
+        font-size: 0.875rem;
+    }
+    #img-publicacao {
+        width: 60px;
+        height: 60px;
+    }
+    #user-img {
+        width: 60px;
+        height: 60px;
+    }
+    mat-card {
+        height: 100px;
+    }
+}
+@media(max-width: 1510px) {
+    span {
+        font-size: 0.625rem;
+    }
+    .toUppeCase {
+        font-size: 0.75rem;
+    }
+    #img-publicacao {
+        width: 40px;
+        height: 40px;
+    }
+    #user-img {
+        width: 40px;
+        height: 40px;
+    }
+    mat-card {
+        height: 90px;
+    }
+}

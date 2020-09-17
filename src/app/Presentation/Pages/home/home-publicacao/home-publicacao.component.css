@@ -138,6 +138,30 @@ mat-card {
     z-index: 9999;
     transition: 300ms;
 }
+.concluido {
+    background-color: #4C7A34;
+    color: white;
+}
+.execucao {
+    background-color: #AFB915;
+    color: white;
+}
+.encaminhado {
+    background-color: #EFCA16;
+    color: white;
+}
+.analise {
+    background-color: #ECA303;
+    color: white;
+}
+.protocolado {
+    background-color: #F36000;
+    color: white;
+}
+.recebido {
+    background-color: #CA251F;
+    color: white;
+}
 @keyframes pulse {
 	0% {
 		background-color: #bdbebd;
