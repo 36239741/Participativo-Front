@@ -5,8 +5,8 @@ export class Publicacao {
         this.numero = 0;
         this.complemento = '';
         this.cep = '';
-        this.bairroId = 0;
-        this.categoriaId = 0;
+        this.bairroId = '';
+        this.categoriaId = '';
         this.usuarioUuid = '';
     }
     descricao: string;
@@ -14,7 +14,7 @@ export class Publicacao {
     numero: number;
     complemento: string;
     cep: string;
-    bairroId: number;
-    categoriaId: number;
+    bairroId: string;
+    categoriaId: string;
     usuarioUuid: string;
 }

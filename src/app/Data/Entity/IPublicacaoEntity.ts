@@ -5,7 +5,7 @@ export interface Publicacao {
     numero: number;
     complemento: string;
     cep: string;
-    bairroId: number;
-    categoriaId: number;
+    bairroId: string;
+    categoriaId: string;
     usuarioUuid: string;
 }

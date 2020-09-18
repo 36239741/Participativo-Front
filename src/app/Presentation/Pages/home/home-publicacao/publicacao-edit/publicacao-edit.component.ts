@@ -53,7 +53,7 @@ export class PublicacaoEditComponent implements OnInit, AfterViewChecked {
       descricao: this.form.get('descricao').value,
       logradouro: this.form.get('logradouro').value,
       numero: this.form.get('numero').value,
-      categoriaId: 0,
+      categoriaId: '',
       usuarioUuid: ''
     }
     try {
