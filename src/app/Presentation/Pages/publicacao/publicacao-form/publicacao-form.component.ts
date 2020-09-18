@@ -6,7 +6,7 @@ import { Categoria } from 'src/app/Data/Entity/ICategoriaEntity';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Bairro } from 'src/app/Data/Entity/IBairroEntity';
 import { NgxViacepService } from '@brunoc/ngx-viacep';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Publicacao } from 'src/app/Core/Domain/PublicacaoModel';
 import { ImgRepositoryService, EType } from 'src/app/Data/Repository/img-repository.service';
 import { SnackbarService } from 'src/app/Presentation/Shared/snackbar/snackbar.service';
@@ -41,6 +41,7 @@ export class PublicacaoFormComponent implements OnInit {
               private imgService: ImgRepositoryService,
               private publicacaoUseCase: PublicacaoUseCase,
               private categoriaRepository: CategoriaRepositoryService,
+              private router: Router,
               private route: ActivatedRoute) { }
 
 
@@ -52,10 +53,7 @@ export class PublicacaoFormComponent implements OnInit {
     this.getForm();
   
   }
-    resetForm(formDirective: FormGroupDirective) {
-    formDirective.resetForm();
-    this.form.reset();
-  }
+
   getForm() {
     this.saveFormService.get().subscribe(result => {
       if(result != null) {
@@ -80,31 +78,45 @@ export class PublicacaoFormComponent implements OnInit {
       try {
        (await (this.publicacaoUseCase.create(this.publicacao))).toPromise()
           .then(result => { 
-          this.imgService.upload(this.fileToUpload , EType['Publicacao'], result).toPromise();
+            if(this.fileToUpload != null) {
+              this.imgService.upload(this.fileToUpload , EType['Publicacao'], result).toPromise();
+            }
+          this.form.reset();
+            Object.keys(this.form.controls).forEach(key => {
+              this.form.get(key).setErrors(null) ;
+          });
+          this.router.navigate(['home'])
           this.spinner = false;
            })
       } catch (error) {
         this.snackBar.open({ message: error.message, duration: 5, customClass: 'error' })
         this.spinner = false;
       }
-      this.form.reset();
-      Object.keys(this.form.controls).forEach(key => {
-        this.form.get(key).setErrors(null) ;
-      });
+    } else {
+      this.form.markAllAsTouched()
     }
+  }
+    public markAllAsTouched(formGroup: FormGroup): void {
+    (Object as any).values(formGroup.controls).forEach((control: any) => {
+        control.markAsTouched();
+        if (control.controls) {
+            this.markAllAsTouched(control);
+        }
+    });
   }
   createForm() {
     this.form = this.formBuilder.group({
       descricao: new FormControl(this.publicacao.descricao, [Validators.required, Validators.minLength(20)]),
-      logradouro: new FormControl(this.publicacao.logradouro),
+      logradouro: new FormControl(this.publicacao.logradouro, Validators.required),
       numero: new FormControl(this.publicacao.numero),
       complemento: new FormControl(this.publicacao.complemento),
       cep: new FormControl(this.publicacao.cep),
-      bairroId: new FormControl(this.publicacao.bairroId),
+      bairroId: new FormControl(this.publicacao.bairroId, Validators.required),
       categoriaId: new FormControl(this.publicacao.categoriaId, Validators.required),
       img: new FormControl('', [this.imgTypeValidator]),
-      ocult: new FormControl(null, [ this.imgRequired ]),
+      ocult: new FormControl(null, [ ]),
     })
+    this.form.get('img').setErrors(null)
   }
   /*Funcao procula o elemento com o id 'upload' e faz o evento de click*/
   openFile() {
@@ -134,10 +146,14 @@ export class PublicacaoFormComponent implements OnInit {
   /* Valida o tipo de imagem */
   imgTypeValidator(control: AbstractControl) {
     let fileName:string = control.value
-    let type:string[] = fileName.trim().split('.');
-    let permitType: string[] = ['png', 'jpg'];
-    let result: string[] = permitType.filter(value => { return value === type[type.length -1] });
-    return result.length === 0 ? { imgTypeValidator: true } : null;
+    if(fileName) {
+      let type:string[] = fileName.trim().split('.');
+      let permitType: string[] = ['png', 'jpg'];
+      let result: string[] = permitType.filter(value => { return value === type[type.length -1] });
+      return result.length === 0 ? { imgTypeValidator: true } : null;
+    } else {
+        return null
+    }
   }
   /* Valida se tem alguma imagem */
   imgRequired(control: AbstractControl) {

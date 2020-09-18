@@ -35,13 +35,18 @@
    >
    <mat-icon class="menu-icon">
        add_box
-    </mat-icon>
+    </mat-icon> 
   </a>
   <a 
   id="notificacao"
+  
   (click)="notifications()"
    >
-   <mat-icon class="menu-icon" [matBadge]="badge" matBadgeColor="warn" [matBadgeHidden]="badge === 0 ? true : false">
+   <mat-icon class="menu-icon" 
+   [ngClass]="{'notNotfications' : notificacoes.length === 0}" 
+   [matBadge]="badge" 
+   matBadgeColor="warn" 
+   [matBadgeHidden]="badge === 0 ? true : false">
        notifications 
     </mat-icon>
   </a>

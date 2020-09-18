@@ -24,6 +24,7 @@ L.Marker.prototype.options.icon = iconDefault;
 })
 export class MapComponent implements OnInit {
   map;
+  enderecoValidate: boolean = false
   constructor( @Inject(MAT_DIALOG_DATA) public data: Endereco,
               private dialogRef: MatDialog,) { }
 
@@ -37,6 +38,7 @@ export class MapComponent implements OnInit {
   async openMap () {
     const results = await provider.search(
       { query: `${this.data.logradouro} ${this.data.numero}, Foz do iguacu`});
+    results.length == 0 ? this.enderecoValidate = true : this.enderecoValidate = false
     this.map = await L.map('map').setView([results[0].y, results[0].x], 13);
 
     const tiles = await L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -45,7 +47,11 @@ export class MapComponent implements OnInit {
   });
   tiles.addTo(this.map);
   const circle = await L.marker([results[0].y, results[0].x]).addTo(this.map)
-  .bindPopup(`${this.data.logradouro} ${this.data.numero} - ${this.data.bairro.nome} <br> ${this.data.complemento}`)
+  .bindPopup(`${this.data.logradouro ? this.data.logradouro : ''} 
+  ${this.data.numero ? this.data.numero : ''} 
+  ${this.data.logradouro || this.data.numero ? '-' : ''} 
+  ${this.data.bairro ? this.data.bairro.nome : ''} <br> 
+  ${this.data.complemento ? this.data.complemento : ''}`)
   .openPopup();;
 
   }

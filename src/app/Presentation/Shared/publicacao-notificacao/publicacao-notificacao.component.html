@@ -19,15 +19,15 @@ fxLayoutAlign="center center">
     class="notificacao-content"
     fxLayout="row"
     fxLayoutAlign="space-between center"
-    fxLayoutGap="5px"
+    fxLayoutGap="10px"
     >
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
       <section fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center start"> 
         <img id="user-img" [attr.src]="usuarioImageUrl + data[i].gerador.avatar | img:'../../../../../assets/imgs/no_user_logo.png' | async" alt="Foto do usuario">
     </section>
-     <section fxLayout="column" fxLayoutGap="5px">
+     <section fxLayout="column" fxLayoutGap="5px" class="notificacao-text">
       <p class="color">
-        <span>{{  data[i].tipo != 'STATUS' ?  data[i].gerador.nome : 'Foi alterado o' }} </span> <strong class="toUppeCase">{{  data[i].tipo | notificationsType  }}</strong> {{  data[i].tipo != 'STATUS' ? 'sua publicação' : 'da sua publicação' }}
+        <span>{{  data[i].tipo != 'STATUS' ?  data[i].gerador.nome : 'Foi alterado o' }} </span> <b class="toUppeCase">{{  data[i].tipo | notificationsType  }}</b> {{  data[i].tipo != 'STATUS' ? 'sua publicação' : 'da sua publicação' }}
       </p>
       <section fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
         <mat-icon class="color">watch_later</mat-icon><p class="color font-size"> em {{  data[i].createdAt }}</p>

@@ -2,8 +2,6 @@
   <div 
   class="form-container">
   <form 
-  #formDirective="ngForm"
-  (ngSubmit)="resetForm(formDirective)"
   fxLayout="row"
   fxLayoutGap="5px"
   [formGroup]="form">
@@ -99,7 +97,7 @@
     fxLayout="row"
     fxLayoutGap="15px"
     fxLayoutAlign="center end">
-      <button mat-raised-button color="primary" id="publicar-btn" (click)="createPublicacao()" [disabled]="spinner === true ? true : false">Publicar</button>
+      <button mat-raised-button color="primary" id="publicar-btn" type="submit" (click)="createPublicacao()" [disabled]="spinner === true ? true : false">Publicar</button>
       <mat-spinner diameter="35" *ngIf="spinner"></mat-spinner>
     </div>
 

@@ -2,6 +2,8 @@
     <h5>Mapa de localização</h5>
     <mat-icon (click)="closeMap()">close</mat-icon>
 </div>
-
+<div *ngIf='enderecoValidate' fxLayoutAlign="center center">
+    <h4>Endereço não encontrado</h4>
+</div>
 
 <div id="map"></div>

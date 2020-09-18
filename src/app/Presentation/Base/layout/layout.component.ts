@@ -12,8 +12,6 @@ import { FormControl } from '@angular/forms';
 import { FindPublicationBehaviorService } from './find-publication-behavior.service';
 import { environment } from 'src/environments/environment';
 import { PublicacaoUseCase } from 'src/app/Core/Usecases/PublicacaoUseCase';
-import { Publicacao } from 'src/app/Core/Domain/PublicacaoModel';
-import * as moment from 'moment';
 
 
 @Component({
@@ -66,6 +64,7 @@ export class LayoutComponent implements OnInit {
   }
 
    notifications() {
+     if(this.notificacoes.length > 0) {
       let btnNotificacao = document.getElementById('notificacao');
       let coordenadas = btnNotificacao.getBoundingClientRect();
       let top = coordenadas.top + 64;
@@ -75,11 +74,8 @@ export class LayoutComponent implements OnInit {
           width: '30vw',
           height: '85vh',
           data: this.notificacoes,
-        }).afterClosed().subscribe(() => {this.findNotifications()});    
-
-
-    
-
+        }).afterClosed().subscribe(() => {this.findNotifications()});  
+     }
   }
 
   sair() {

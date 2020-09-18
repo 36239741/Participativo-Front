@@ -85,6 +85,9 @@ mat-card {
     padding-left: 20px;    
     border-radius: 40px;
 }
+.status-publicacao span {
+    font-size: 0.875rem;
+}
 .reclamacao {
     background-color: red;
     color: white;

@@ -60,6 +60,7 @@ nav a:hover {
 }
 .menu-icons {
     margin-right: 15px;
+    margin-left: 20px;
 }
 .logo {
     width: 41%;
@@ -100,6 +101,9 @@ mat-form-field mat-icon {
 .notificacao {
     width: 100px;
     height: 200px;
+}
+.notNotfications {
+    color: rgba(0, 0, 0, 0.1)
 }
 .background {
     background: rgba(0, 0, 0, 0);

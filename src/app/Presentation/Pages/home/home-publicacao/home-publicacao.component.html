@@ -84,10 +84,16 @@ class="publicacao-content">
       [ngClass]="{'local-content': publicacao.image === null}"
       [class.mat-elevation-z3]="true"
       class="local-publicacao"
-      fxLayout="row"
+      fxLayout="column"
       fxLayoutAlign="center center">
       <span>
-        {{ publicacao.endereco.logradouro }} {{ publicacao.endereco.numero }} - {{ publicacao.endereco.bairro.nome }} {{ publicacao.endereco.complemento }}
+        {{ publicacao.endereco.logradouro }} 
+        {{ publicacao.endereco.numero }} 
+        {{ publicacao.endereco.logradouro || publicacao.endereco.numero ? '-' : '' }}
+        {{ publicacao.endereco.bairro.nome }} 
+      </span>
+      <span>
+        {{ publicacao.endereco.complemento }}
       </span>
       </div>
     </a>
@@ -146,7 +152,7 @@ class="publicacao-content">
     'recebido': status.tipo === 'RECEBIDO'}"
     fxLayout="row"
     fxLayoutAlign="center center"
-    fxLayoutGap="20px"
+    fxLayoutGap="10px"
     class="status-publicacao">
     <mat-icon>check_circle</mat-icon>
       <span>

@@ -29,6 +29,7 @@ export class PublicationFindComponent implements OnInit, OnDestroy {
   params: string;
   categorias: string[] = ['1','2','3'];
   categoria: string;
+  comResultado: boolean = false
   task : Task[] = 
   [{color: "primary", name: 'Sugestão', completed: true, id: 'sugestao', 'disabled': false, 'pk': '2'}, 
   {color: "primary", name: 'Reclamação', completed: true, id: 'reclamacao', 'disabled': false, 'pk': '1'},
@@ -87,7 +88,7 @@ export class PublicationFindComponent implements OnInit, OnDestroy {
       {
         this.publicacoesList = []
         this.publicacaoUseCase.findByParams(descricao, this.categorias).subscribe(result => {
-        
+          result.content.length ===  0 ? this.comResultado = true : this.comResultado = false
          result.content.map(publicacao => {this.unsubscribable.push(this.publicacaoUseCase.findOne(publicacao.uuid).subscribe(publicacao => {
           this.publicacoesList.push(publicacao);
        }))})
