@@ -35,6 +35,12 @@ mat-card {
 .color {
     color: rgba(0, 0, 0, 0.5);
 }
+#status-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 5rem;
+    color: #F36000;
+}
 .color span {
     text-transform: capitalize;
 }

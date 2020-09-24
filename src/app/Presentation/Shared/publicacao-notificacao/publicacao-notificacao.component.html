@@ -22,11 +22,14 @@ fxLayoutAlign="center center">
     fxLayoutGap="10px"
     >
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
-      <section fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center start"> 
-        <img id="user-img" [attr.src]="usuarioImageUrl + data[i].gerador.avatar | img:'../../../../../assets/imgs/no_user_logo.png' | async" alt="Foto do usuario">
+      <section fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center start">
+        <mat-icon id="status-icon" *ngIf="data[i].tipo === 'STATUS'">
+          list_alt
+        </mat-icon> 
+        <img *ngIf="data[i].tipo !== 'STATUS'" id="user-img" [attr.src]="usuarioImageUrl + data[i].gerador.avatar | img:'../../../../../assets/imgs/no_user_logo.png' | async" alt="Foto do usuario">
     </section>
      <section fxLayout="column" fxLayoutGap="5px" class="notificacao-text">
-      <p class="color">
+      <p>
         <span>{{  data[i].tipo != 'STATUS' ?  data[i].gerador.nome : 'Foi alterado o' }} </span> <b class="toUppeCase">{{  data[i].tipo | notificationsType  }}</b> {{  data[i].tipo != 'STATUS' ? 'sua publicação' : 'da sua publicação' }}
       </p>
       <section fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">

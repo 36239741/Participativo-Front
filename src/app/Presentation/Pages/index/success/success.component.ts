@@ -20,7 +20,7 @@ export class SuccessComponent implements OnInit {
   async checkMethod() {
     this.method = await this.actRoute.snapshot.params.method;
     if(this.method == 'registro') {
-      this.success = {title: 'Registro efetuado!', phrase: 'Verifique seu email para confirmar seu cadastro.'};
+      this.success = {title: 'Cadastro efetuado!', phrase: 'Atenção! Verifique seu email para confirmar e validar seu cadastro.'};
     }
     else if (this.method == 'recuperar-senha') {
       this.success = {title: 'E-mail enviado!', phrase: 'Verifique seu email e clique no botão "Alterar a senha".'}

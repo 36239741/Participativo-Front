@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ElementRef, ViewEncapsulation } from '@angular/core';
 
 import { Menu } from './menu.interface';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageEndService } from './page-end.service';
 import { AuthenticationService } from 'src/app/Infra/Authentication/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -41,6 +41,7 @@ export class LayoutComponent implements OnInit {
     private router: Router,
     private behaviorSerach: FindPublicationBehaviorService,
     private usuarioUseCase: UsuarioUseCase,
+    private route: ActivatedRoute,
     private publicacaoUseCase: PublicacaoUseCase,
     private auth: AuthenticationService,
     private behavior: PageEndService
@@ -83,6 +84,11 @@ export class LayoutComponent implements OnInit {
       localStorage.removeItem('token');
       this.router.navigate(['/'])
     })
+  }
+  refresh() {
+    if(this.router.url === '/home') {
+      window.location.reload()
+    }
   }
 
   @HostListener('window:scroll', ['$event']) // for window scroll events

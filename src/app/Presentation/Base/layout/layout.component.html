@@ -1,4 +1,6 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary"       
+fxHide.xs
+fxHide.sm>
   <mat-toolbar-row >
 
     <div id="menu"
@@ -10,8 +12,6 @@
 
     <div fxLayoutAlign="center center" fxLayoutGap="10px">
       <img 
-      fxHide.xs
-      fxHide.sm
       id="logo" 
       src="../../../../assets/imgs/logo-fundo-branco.png" 
       alt="Logo Marca.">
@@ -25,6 +25,7 @@
   
   <a 
   routerLink="/home"
+  (click)="refresh()"
   >
     <mat-icon class="menu-icon">
        home 
@@ -70,6 +71,70 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
+<mat-toolbar
+fxHide.lg
+fxHide.md
+color="primary">
+  <mat-toolbar-row>
+    <div fxLayoutAlign="center center" fxLayoutGap="10px">
+      <img 
+      id="logo" 
+      src="../../../../assets/imgs/logo-fundo-branco.png" 
+      alt="Logo Marca.">
+      <mat-form-field appearance="fill" class="search">
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup.enter)="findPublicationsByParams()" [formControl]="search">
+        <mat-icon id="icon-search" matSuffix (click)="findPublicationsByParams()">search</mat-icon>
+      </mat-form-field>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <div fxLayoutGap="7px" fxLayoutAlign="space-between center" class="layout-menu-mobile">
+      <a 
+      routerLink="/home"
+      (click)="refresh()"
+      >
+        <mat-icon class="menu-icon">
+           home 
+        </mat-icon>
+      </a>
+      <a 
+      routerLink="/publicar"
+       >
+       <mat-icon class="menu-icon">
+           add_box
+        </mat-icon> 
+      </a>
+      <a 
+      id="notificacao"
+      
+      (click)="notifications()"
+       >
+       <mat-icon class="menu-icon" 
+       [ngClass]="{'notNotfications' : notificacoes.length === 0}" 
+       [matBadge]="badge" 
+       matBadgeColor="warn" 
+       [matBadgeHidden]="badge === 0 ? true : false">
+           notifications 
+        </mat-icon>
+      </a>
+      <a id="perfil" routerLink="/perfil">
+        <participativo-avatar 
+        id="menu-perfil"
+        borderColor="2px solid white" 
+        [src]="usuarioImageUrl + usuario?.avatar | img:'../../../../assets/imgs/no_user_logo.png' | async" 
+        width="40px" height="40px">
+        </participativo-avatar></a>
+      <a 
+      routerLink="/"
+      (click)="sair()">
+      <mat-icon class="menu-icon">
+        exit_to_app 
+        </mat-icon>
+      </a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
 
   <mat-sidenav-container>
     <mat-sidenav-content

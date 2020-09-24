@@ -19,7 +19,7 @@ constructor(private snackBar: MatSnackBar) { }
   open(config: SnackBar) {
     this.snackBar.open(config.message, '' , {
       duration: config.duration * 1000,
-      panelClass: [config.customClass]
+      panelClass: [config.customClass],
     })
   }
 

@@ -77,10 +77,13 @@ export class PublicacaoFormComponent implements OnInit {
       this.publicacao = this.form.value;
       try {
        (await (this.publicacaoUseCase.create(this.publicacao))).toPromise()
-          .then(result => { 
+          .then(async result => { 
+
             if(this.fileToUpload != null) {
-              this.imgService.upload(this.fileToUpload , EType['Publicacao'], result).toPromise();
+              await this.imgService.upload(this.fileToUpload , EType['Publicacao'], result).toPromise()
+
             }
+
           this.form.reset();
             Object.keys(this.form.controls).forEach(key => {
               this.form.get(key).setErrors(null) ;

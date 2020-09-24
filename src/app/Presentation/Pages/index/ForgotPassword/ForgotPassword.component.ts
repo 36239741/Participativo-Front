@@ -46,10 +46,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         },
          err => {
           this.snackBar.open({ message: err.error.message, duration: 5, customClass: 'error' });
+          this.spinner = false
          },
          () => {
-          this.spinner = false
           this.unsubscribable.unsubscribe();
+          this.spinner = false
          })
     }
   }
