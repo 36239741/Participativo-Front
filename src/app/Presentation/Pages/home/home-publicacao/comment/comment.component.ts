@@ -6,6 +6,7 @@ import { UsuarioUseCase } from 'src/app/Core/Usecases/UsuarioUseCase';
 import { Unsubscribable } from 'rxjs';
 import { Usuario } from 'src/app/Data/Entity/IUsuarioEntity';
 import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'participativo-comment',
@@ -24,9 +25,19 @@ export class CommentComponent implements OnInit, OnDestroy {
   unsubscribe: Unsubscribable;
   usuario:Usuario;
   editCommentControl: FormControl = new FormControl('', Validators.required);
-  constructor(private usuarioUsecase: UsuarioUseCase) { }
+  constructor(private usuarioUsecase: UsuarioUseCase) { 
+  }
 
   ngOnInit() {
+    this.comment.sort((a, b) => {
+      let dateA = moment(a.createdAt, 'DD-MM-YYYY H:mm:ss');
+      let dateB = moment(b.createdAt, 'DD-MM-YYYY H:mm:ss');
+      if (dateA.isAfter(dateB)) return -1;
+      if (dateB.isAfter(dateA)) return 1;
+      return 0
+    })
+    console.log(this.comment)
+
     this.unsubscribe = this.usuarioUsecase.findOne().subscribe(result => { this.usuario = result })
   }
   /* funcao abre o campo da edicao */

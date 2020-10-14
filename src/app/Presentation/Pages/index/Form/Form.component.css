@@ -1,5 +1,6 @@
 .content {
     color: #01579b;
+    padding: 25px;
 }
 .content a {
     cursor: pointer;
@@ -13,6 +14,9 @@
     cursor: pointer;
     text-decoration: underline;
     font-weight: bold;
+}
+span{
+    margin-top: 10px;
 }
 a:visited {
     color: #01579b;

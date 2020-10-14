@@ -13,10 +13,10 @@ import {
 
 export const routeAnimations = trigger('routeAnimations', [
     state('registrar', style({
-        height: '700px'
+        height: '750px'
     })),
     state('rules', style({
-      height: '700px'
+      height: '750px'
   })),
     transition('* => registrar', animate('400ms ease-in-out')),
     transition('registrar => *', animate('400ms ease-in-out')),

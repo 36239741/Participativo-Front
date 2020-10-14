@@ -39,6 +39,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class FormComponent implements OnInit {
   hide = true;
+  hide2 = true;
   form: FormGroup; 
   spinner: boolean = false;
   constructor(private formBuilder: FormBuilder,
@@ -110,8 +111,9 @@ Instancia um reactive form
       nome: new FormControl('', Validators.required),
       sobrenome: new FormControl('', Validators.required),
       telefone: new FormControl('', Validators.required),
-      senha: new FormControl('', [Validators.required, Validators.min(4)])
-    })
+      senha: new FormControl('', [Validators.required, Validators.min(4)]),
+      novaSenha2: new FormControl('', [ Validators.required ]),
+    }, { validators: this.compare })
   }
   /*
   Valida o formulario
@@ -136,5 +138,13 @@ Instancia um reactive form
     let valid = libCpf.validate(cpf) ? null : { cpfValid: true };
     return valid;
   }
+      /* Funcao e um validador se os dois inputs contem o mesmo valor */
+      compare(control: AbstractControl) {
+        if(!(control.get('novaSenha2').value === control.get('senha').value)) {
+          control.get('novaSenha2').setErrors({ compare: true })
+        }else{
+          return null;
+        }
+      }
 
 }

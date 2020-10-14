@@ -70,6 +70,19 @@ class="content">
           Senha é <strong>obrigatória</strong>
         </mat-error>
       </mat-form-field>
+      <mat-form-field appearance="legacy" color="primary">
+        <mat-label>Digite novamente sua senha</mat-label>
+        <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="novaSenha2">
+        <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('novaSenha2').hasError('required')">
+          O campo confirmar senha é <strong>obrigatório</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('novaSenha2').hasError('compare') && form.get('novaSenha2').touched">
+          Senhas digitadas são diferentes
+        </mat-error>
+      </mat-form-field>
       <span>Ao clicar em cadastrar, você concorda com os</span><a (click)="save()" (keydown.enter)="save()" routerLink="termos-uso" >Termos e Política de dados.</a>
     </form>
     <section
